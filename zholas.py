@@ -3,8 +3,12 @@ if (nombre == "Juan"):
     print("Hola Juan")
     print("Hola")
     if (nombre == "Francesco"):
-        print("hola Francesco")
+        print(nombre)
         print("this is un if anidado")
+    else:
+        print("ZZZ mi estimado")
+else:
+    print("JAJA")
 print("Este queda fuera")
 print("Hola mama")
 if (nombre == "Adriano"):

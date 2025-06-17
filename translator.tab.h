@@ -60,7 +60,8 @@ extern int yydebug;
     ACCEPT = 261,                  /* ACCEPT  */
     IF = 262,                      /* IF  */
     EQUALS = 263,                  /* EQUALS  */
-    ENDIF = 264                    /* ENDIF  */
+    ELSE = 264,                    /* ELSE  */
+    ENDIF = 265                    /* ENDIF  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -73,7 +74,7 @@ union YYSTYPE
 
     char* str;
 
-#line 77 "translator.tab.h"
+#line 78 "translator.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

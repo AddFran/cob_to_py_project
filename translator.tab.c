@@ -73,15 +73,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Declaraciones necesarias
-int yylex(void);                // Declaración del lexer (scanner.c)
-void yyerror(const char *s);    // Manejo de errores sintácticos
+int yylex(void);
+void yyerror(const char *s);
 
 int indent_level = 0;
-void print_indent() {
-    for(int i = 0; i < indent_level; i++) printf("    ");
-}
 
+void print_indent() {
+    for (int i = 0; i < indent_level; i++)
+        printf("    ");
+}
 
 #line 87 "translator.tab.c"
 
@@ -120,11 +120,17 @@ enum yysymbol_kind_t
   YYSYMBOL_ACCEPT = 6,                     /* ACCEPT  */
   YYSYMBOL_IF = 7,                         /* IF  */
   YYSYMBOL_EQUALS = 8,                     /* EQUALS  */
-  YYSYMBOL_ENDIF = 9,                      /* ENDIF  */
-  YYSYMBOL_10_n_ = 10,                     /* '\n'  */
-  YYSYMBOL_YYACCEPT = 11,                  /* $accept  */
-  YYSYMBOL_program = 12,                   /* program  */
-  YYSYMBOL_statement = 13                  /* statement  */
+  YYSYMBOL_ELSE = 9,                       /* ELSE  */
+  YYSYMBOL_ENDIF = 10,                     /* ENDIF  */
+  YYSYMBOL_11_n_ = 11,                     /* '\n'  */
+  YYSYMBOL_YYACCEPT = 12,                  /* $accept  */
+  YYSYMBOL_program = 13,                   /* program  */
+  YYSYMBOL_statement = 14,                 /* statement  */
+  YYSYMBOL_15_1 = 15,                      /* $@1  */
+  YYSYMBOL_optional_else = 16,             /* optional_else  */
+  YYSYMBOL_17_2 = 17,                      /* $@2  */
+  YYSYMBOL_statements = 18,                /* statements  */
+  YYSYMBOL_statement_with_newline = 19     /* statement_with_newline  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -452,19 +458,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   11
+#define YYLAST   25
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  11
+#define YYNTOKENS  12
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  3
+#define YYNNTS  8
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  8
+#define YYNRULES  14
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  15
+#define YYNSTATES  26
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   264
+#define YYMAXUTOK   265
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -479,7 +485,7 @@ union yyalloc
 static const yytype_int8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      10,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+      11,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -504,14 +510,15 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9
+       5,     6,     7,     8,     9,    10
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    31,    31,    33,    37,    41,    45,    49,    54
+       0,    31,    31,    33,    37,    41,    45,    49,    49,    59,
+      61,    61,    71,    72,    76
 };
 #endif
 
@@ -528,8 +535,9 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
 static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "STRING", "IDENTIFIER",
-  "DISPLAY", "ACCEPT", "IF", "EQUALS", "ENDIF", "'\\n'", "$accept",
-  "program", "statement", YY_NULLPTR
+  "DISPLAY", "ACCEPT", "IF", "EQUALS", "ELSE", "ENDIF", "'\\n'", "$accept",
+  "program", "statement", "$@1", "optional_else", "$@2", "statements",
+  "statement_with_newline", YY_NULLPTR
 };
 
 static const char *
@@ -553,8 +561,9 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -7,     0,    -7,    -2,    -1,     4,    -7,    -6,    -7,    -7,
-      -7,     2,    -7,     8,    -7
+      -7,     1,    -7,    11,     8,    13,    -6,    -7,    -7,    -7,
+      -7,    10,    -7,    16,     9,    -7,    -3,     4,    -7,    12,
+      15,    -7,    -7,    -7,    -3,    -3
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -562,20 +571,21 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       2,     0,     1,     0,     0,     0,     8,     0,     4,     5,
-       6,     0,     3,     0,     7
+       2,     0,     1,     0,     0,     0,     0,     3,     4,     5,
+       6,     0,    14,     0,     0,     7,     0,     9,    12,     0,
+       0,    13,    10,     8,     0,    11
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -7,    -7,    -7
+      -7,    -7,    -7,    -7,    -7,    -7,    -2,    -1
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     1,     7
+       0,     1,     6,    16,    20,    24,    17,    18
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -583,34 +593,39 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       2,     8,     9,    10,    12,     3,     4,     5,    11,     6,
-      13,    14
+       7,     2,     3,     4,     5,    12,     3,     4,     5,     3,
+       4,     5,    10,    19,     8,     9,    21,    11,    13,    14,
+      15,     0,    25,    22,    21,    23
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     3,     4,     4,    10,     5,     6,     7,     4,     9,
-       8,     3
+       1,     0,     5,     6,     7,    11,     5,     6,     7,     5,
+       6,     7,     4,     9,     3,     4,    17,     4,     8,     3,
+      11,    -1,    24,    11,    25,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    12,     0,     5,     6,     7,     9,    13,     3,     4,
-       4,     4,    10,     8,     3
+       0,    13,     0,     5,     6,     7,    14,    19,     3,     4,
+       4,     4,    11,     8,     3,    11,    15,    18,    19,     9,
+      16,    19,    11,    10,    17,    18
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    11,    12,    12,    13,    13,    13,    13,    13
+       0,    12,    13,    13,    14,    14,    14,    15,    14,    16,
+      17,    16,    18,    18,    19
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     0,     3,     2,     2,     2,     4,     1
+       0,     2,     0,     2,     2,     2,     2,     0,     9,     0,
+       0,     4,     1,     2,     2
 };
 
 
@@ -1075,51 +1090,62 @@ yyreduce:
     {
   case 4: /* statement: DISPLAY STRING  */
 #line 37 "translator.y"
-                   {
-        print_indent();
-        printf("print(\"%s\")\n", (yyvsp[0].str));
-    }
-#line 1083 "translator.tab.c"
+                     {
+          print_indent();
+          printf("print(\"%s\")\n", (yyvsp[0].str));
+      }
+#line 1098 "translator.tab.c"
     break;
 
   case 5: /* statement: DISPLAY IDENTIFIER  */
 #line 41 "translator.y"
                          {
-        print_indent();
-        printf("print(%s)\n", (yyvsp[0].str));
-    }
-#line 1092 "translator.tab.c"
+          print_indent();
+          printf("print(%s)\n", (yyvsp[0].str));
+      }
+#line 1107 "translator.tab.c"
     break;
 
   case 6: /* statement: ACCEPT IDENTIFIER  */
 #line 45 "translator.y"
                         {
-        print_indent();
-        printf("%s = input()\n", (yyvsp[0].str));
-    }
-#line 1101 "translator.tab.c"
+          print_indent();
+          printf("%s = input()\n", (yyvsp[0].str));
+      }
+#line 1116 "translator.tab.c"
     break;
 
-  case 7: /* statement: IF IDENTIFIER EQUALS STRING  */
+  case 7: /* $@1: %empty  */
 #line 49 "translator.y"
-                                  {
-        print_indent();
-        printf("if (%s == \"%s\"):\n", (yyvsp[-2].str), (yyvsp[0].str));
-        indent_level++;
-    }
-#line 1111 "translator.tab.c"
+                                       {
+          print_indent();
+          printf("if (%s == \"%s\"):\n", (yyvsp[-3].str), (yyvsp[-1].str));
+          indent_level++;
+      }
+#line 1126 "translator.tab.c"
     break;
 
-  case 8: /* statement: ENDIF  */
+  case 8: /* statement: IF IDENTIFIER EQUALS STRING '\n' $@1 statements optional_else ENDIF  */
 #line 54 "translator.y"
-            {
-        indent_level--;
-    }
-#line 1119 "translator.tab.c"
+                                     {
+          indent_level--; // Cierra el bloque completo
+      }
+#line 1134 "translator.tab.c"
+    break;
+
+  case 10: /* $@2: %empty  */
+#line 61 "translator.y"
+                {
+          indent_level--; // Sal del bloque IF
+          print_indent();
+          printf("else:\n");
+          indent_level++; // Entra al bloque ELSE
+      }
+#line 1145 "translator.tab.c"
     break;
 
 
-#line 1123 "translator.tab.c"
+#line 1149 "translator.tab.c"
 
       default: break;
     }
@@ -1312,7 +1338,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 59 "translator.y"
+#line 79 "translator.y"
 
 
 int main(int argc, char *argv[]) {
@@ -1321,23 +1347,20 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Redirigir entrada estándar
     if (freopen(argv[1], "r", stdin) == NULL) {
         perror("No se pudo abrir el archivo de entrada");
         return 1;
     }
 
-    // Redirigir salida estándar
     if (freopen(argv[2], "w", stdout) == NULL) {
         perror("No se pudo abrir el archivo de salida");
         return 1;
     }
 
-    yyparse();  // ahora lee de archivo y escribe a archivo
+    yyparse();
 
     return 0;
 }
-
 
 void yyerror(const char *s) {
     fprintf(stderr, "Error: %s\n", s);

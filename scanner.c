@@ -28,6 +28,8 @@ int yylex() {
             return ACCEPT;
         else if (strcmp(buffer, "IF") == 0)
             return IF;
+        else if (strcmp(buffer, "ELSE") == 0)
+            return ELSE;
         else if (strcmp(buffer, "END-IF") == 0)
             return ENDIF;
         else {
