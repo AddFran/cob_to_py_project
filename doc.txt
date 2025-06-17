@@ -1,0 +1,35 @@
+This is the real real documentation for this program
+
+En si, tenemos 2 archivos:
+ - scanner.c   : Cumple el rol de analizador lexico, lee caracter x caracter, los agrupa en tokens y los envia a translator.y
+ - translator.y: Cumple el rol de analizador sintactico, verifica que la secuencia de tokens sea valida segun la gramatica definida y ejecuta acciones en C para generar el codigo en .py
+Esto es lo que tenemos por el momento.
+
+
+
+######################################################################
+scanner.py
+######################################################################
+Lee continuamente caracteres, controlando los espacios y saltos de linea
+
+Tokens:
+ - DISPLAY : Intruccion en COBOL
+ - STRING  : Cadena contenida entre ""
+ - \n      : Fin de linea
+
+
+
+
+
+
+
+
+######################################################################
+translator.y
+######################################################################
+Configurado para leer solos los tokens que envie scanner.c
+Capacidad para leer multiples lineas
+
+%token <str> STRING IDENTIFIER
+%token DISPLAY ACCEPT
+%type <str> statement
