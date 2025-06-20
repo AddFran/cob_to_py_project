@@ -1,21 +1,18 @@
-ACCEPT nombre
-IF nombre = "Juan"
-    DISPLAY "Hola Juan"
-    DISPLAY "Hola"
-    IF nombre = "Francesco"
-        DISPLAY nombre
-        DISPLAY "this is un if anidado"
+DISPLAY "Enter your name:"
+ACCEPT USER-NAME
+DISPLAY "Enter your age:"
+ACCEPT AGE
+DISPLAY "Enter your country:"
+ACCEPT COUNTRY
+IF AGE = 18
+    MOVE "You are a minor." TO MESSAGE
+    IF COUNTRY = "USA"
+        DISPLAY "You need parental consent."
     ELSE
-        DISPLAY "ZZZ mi estimado"
+        DISPLAY "Consent laws vary by country."
     END-IF
 ELSE
-    DISPLAY "JAJA"
+    MOVE "You are an adult." TO MESSAGE
 END-IF
-DISPLAY "Este queda fuera"
-DISPLAY "Hola mama"
-IF nombre = "Adriano"
-    DISPLAY "Hola Adriano"
-    DISPLAY "Este es otro bloque"
-    DISPLAY "De ifs"
-END-IF
-DISPLAY "Fin del programa xd"
+DISPLAY MESSAGE
+DISPLAY "End of program."

@@ -22,8 +22,10 @@ void print_indent() {
 %token DISPLAY ACCEPT
 %token IF EQUALS
 %token ELSE ENDIF
+%token <str> NUMBER
+%token MOVE TO
 
-%type <str> statement
+%type statement
 %start program
 
 %%
@@ -34,42 +36,74 @@ program:
 ;   
 
 statement:
-      DISPLAY STRING {
-          print_indent();
-          printf("print(\"%s\")\n", $2);
-      }
+    DISPLAY STRING {
+        print_indent();
+        printf("print(\"%s\")\n", $2);
+    }
     | DISPLAY IDENTIFIER {
-          print_indent();
-          printf("print(%s)\n", $2);
+        print_indent();
+        printf("print(%s)\n", $2);
       }
     | ACCEPT IDENTIFIER {
-          print_indent();
-          printf("%s = input()\n", $2);
+        print_indent();
+        printf("%s = input()\n", $2);
       }
-    | IF IDENTIFIER EQUALS STRING '\n' {
+    | MOVE STRING TO IDENTIFIER {
+        print_indent();
+        printf("%s = \"%s\"\n", $4, $2);
+    }
+    | MOVE NUMBER TO IDENTIFIER {
+        print_indent();
+        printf("%s = %s\n", $4, $2);
+    }
+    | MOVE IDENTIFIER TO IDENTIFIER {
+        print_indent();
+        printf("%s = %s\n", $4, $2);
+    }
+    | if_statement
+;
+
+if_statement:
+      IF IDENTIFIER EQUALS STRING '\n' {
           print_indent();
           printf("if (%s == \"%s\"):\n", $2, $4);
           indent_level++;
       }
       statements optional_else ENDIF {
-          indent_level--; // Cierra el bloque completo
+          indent_level--;
+      }
+    | IF IDENTIFIER EQUALS IDENTIFIER '\n' {
+          print_indent();
+          printf("if (%s == %s):\n", $2, $4);
+          indent_level++;
+      }
+      statements optional_else ENDIF {
+          indent_level--;
+      }
+    | IF IDENTIFIER EQUALS NUMBER '\n' {
+          print_indent();
+          printf("if (%s == %s):\n", $2, $4);
+          indent_level++;
+      }
+      statements optional_else ENDIF {
+          indent_level--;
       }
 ;
 
 optional_else:
       /* vacío */
     | ELSE '\n' {
-          indent_level--; // Sal del bloque IF
-          print_indent();
-          printf("else:\n");
-          indent_level++; // Entra al bloque ELSE
-      }
-      statements
+        indent_level--; 
+        print_indent();
+        printf("else:\n");
+        indent_level++; 
+    }
+    statements
 ;
 
 statements:
     statement_with_newline
-  | statements statement_with_newline
+    | statements statement_with_newline
 ;
 
 statement_with_newline:

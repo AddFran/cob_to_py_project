@@ -1,18 +1,16 @@
-nombre = input()
-if (nombre == "Juan"):
-    print("Hola Juan")
-    print("Hola")
-    if (nombre == "Francesco"):
-        print(nombre)
-        print("this is un if anidado")
+print("Enter your name:")
+USER-NAME = input()
+print("Enter your age:")
+AGE = input()
+print("Enter your country:")
+COUNTRY = input()
+if (AGE == 18):
+    MESSAGE = "You are a minor."
+    if (COUNTRY == "USA"):
+        print("You need parental consent.")
     else:
-        print("ZZZ mi estimado")
+        print("Consent laws vary by country.")
 else:
-    print("JAJA")
-print("Este queda fuera")
-print("Hola mama")
-if (nombre == "Adriano"):
-    print("Hola Adriano")
-    print("Este es otro bloque")
-    print("De ifs")
-print("Fin del programa xd")
+    MESSAGE = "You are an adult."
+print(MESSAGE)
+print("End of program.")
