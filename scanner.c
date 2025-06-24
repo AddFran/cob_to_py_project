@@ -32,8 +32,22 @@ int yylex() {
             return ENDIF;
         else if(strcmp(buffer,"MOVE")==0)
             return MOVE;
+        else if(strcmp(buffer,"ADD")==0)
+            return ADD;
+        else if(strcmp(buffer,"SUBTRACT")==0)
+            return SUBTRACT;
+        else if(strcmp(buffer,"MULTIPLY")==0)
+            return MULTIPLY;
+        else if(strcmp(buffer,"DIVIDE")==0)
+            return DIVIDE;
         else if(strcmp(buffer,"TO")==0)
             return TO;
+        else if(strcmp(buffer,"FROM")==0)
+            return FROM;
+        else if(strcmp(buffer,"BY")==0)
+            return BY;
+        else if(strcmp(buffer,"INTO")==0)
+            return INTO;
         else{
             yylval.str = strdup(buffer); 
             return IDENTIFIER;

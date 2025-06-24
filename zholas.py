@@ -13,4 +13,15 @@ if (AGE == 18):
 else:
     MESSAGE = "You are an adult."
 print(MESSAGE)
+AGE += 12
+AGE += COUNTRY
+AGE -= 10
+AGE -= USERNAME
+print(AGE)
+AGE *= 12
+COUNTRY *= COUNTRY
+AGE /= 2
+COUNTRY /= AGE
+AGE /= 2
+AGE /= COUNTRY
 print("End of program.")

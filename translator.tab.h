@@ -66,7 +66,14 @@ extern int yydebug;
     ENDIF = 267,                   /* ENDIF  */
     NUMBER = 268,                  /* NUMBER  */
     MOVE = 269,                    /* MOVE  */
-    TO = 270                       /* TO  */
+    TO = 270,                      /* TO  */
+    ADD = 271,                     /* ADD  */
+    SUBTRACT = 272,                /* SUBTRACT  */
+    MULTIPLY = 273,                /* MULTIPLY  */
+    DIVIDE = 274,                  /* DIVIDE  */
+    FROM = 275,                    /* FROM  */
+    BY = 276,                      /* BY  */
+    INTO = 277                     /* INTO  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -79,7 +86,7 @@ union YYSTYPE
 
     char* str;
 
-#line 83 "translator.tab.h"
+#line 90 "translator.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

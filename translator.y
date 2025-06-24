@@ -25,6 +25,8 @@ void print_indent() {
 %token ELSE ENDIF
 %token <str> NUMBER
 %token MOVE TO
+%token ADD SUBTRACT MULTIPLY DIVIDE
+%token FROM BY INTO 
 
 %type statement
 %start program
@@ -60,6 +62,46 @@ statement:
     | MOVE IDENTIFIER TO IDENTIFIER {
         print_indent();
         printf("%s = %s\n", $4, $2);
+    }
+    | ADD NUMBER TO IDENTIFIER {
+        print_indent();
+        printf("%s += %s\n", $4, $2);
+    }
+    | ADD IDENTIFIER TO IDENTIFIER {
+        print_indent();
+        printf("%s += %s\n", $4, $2);
+    }
+    | SUBTRACT NUMBER FROM IDENTIFIER {
+        print_indent();
+        printf("%s -= %s\n", $4, $2);
+    }
+    | SUBTRACT IDENTIFIER FROM IDENTIFIER {
+        print_indent();
+        printf("%s -= %s\n", $4, $2);
+    }
+    | MULTIPLY NUMBER BY IDENTIFIER {
+        print_indent();
+        printf("%s *= %s\n", $4, $2);
+    }
+    | MULTIPLY IDENTIFIER BY IDENTIFIER {
+        print_indent();
+        printf("%s *= %s\n", $4, $2);
+    }
+    | DIVIDE NUMBER INTO IDENTIFIER {
+        print_indent();
+        printf("%s /= %s\n", $4, $2);
+    }
+    | DIVIDE IDENTIFIER INTO IDENTIFIER {
+        print_indent();
+        printf("%s /= %s\n", $4, $2);
+    }
+    | DIVIDE IDENTIFIER BY NUMBER {
+        print_indent();
+        printf("%s /= %s\n", $2, $4);
+    }
+    | DIVIDE IDENTIFIER BY IDENTIFIER {
+        print_indent();
+        printf("%s /= %s\n", $2, $4);
     }
     | if_statement
 ;
