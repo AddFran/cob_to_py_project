@@ -66,6 +66,8 @@ int yylex() {
 
     if(c=='\n') return '\n';
     if(c=='=') return EQUALS;
+    if(c=='<') return MINOR;
+    if(c=='>') return MAJOR;
 
     
 

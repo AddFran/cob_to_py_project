@@ -21,6 +21,7 @@ void print_indent() {
 %token <str> STRING IDENTIFIER
 %token DISPLAY ACCEPT
 %token IF EQUALS
+%token MAJOR MINOR
 %token ELSE ENDIF
 %token <str> NUMBER
 %token MOVE TO
@@ -64,30 +65,64 @@ statement:
 ;
 
 if_statement:
-      IF IDENTIFIER EQUALS STRING '\n' {
-          print_indent();
-          printf("if (%s == \"%s\"):\n", $2, $4);
-          indent_level++;
-      }
-      statements optional_else ENDIF {
-          indent_level--;
-      }
+    IF IDENTIFIER EQUALS STRING '\n' {
+        print_indent();
+        printf("if (%s == \"%s\"):\n", $2, $4);
+        indent_level++;
+    }
+    statements optional_else ENDIF {
+        indent_level--;
+    }
+
     | IF IDENTIFIER EQUALS IDENTIFIER '\n' {
-          print_indent();
-          printf("if (%s == %s):\n", $2, $4);
-          indent_level++;
-      }
-      statements optional_else ENDIF {
-          indent_level--;
-      }
+        print_indent();
+        printf("if (%s == %s):\n", $2, $4);
+        indent_level++;
+    }
+    statements optional_else ENDIF {
+        indent_level--;
+    }
+
     | IF IDENTIFIER EQUALS NUMBER '\n' {
-          print_indent();
-          printf("if (%s == %s):\n", $2, $4);
-          indent_level++;
-      }
-      statements optional_else ENDIF {
-          indent_level--;
-      }
+        print_indent();
+        printf("if (%s == %s):\n", $2, $4);
+        indent_level++;
+    }
+    statements optional_else ENDIF {
+        indent_level--;
+    }
+    | IF IDENTIFIER MINOR IDENTIFIER '\n' {
+        print_indent();
+        printf("if (%s < %s):\n", $2, $4);
+        indent_level++;
+    }
+    statements optional_else ENDIF {
+        indent_level--;
+    }
+    | IF IDENTIFIER MINOR NUMBER '\n' {
+        print_indent();
+        printf("if (%s < %s):\n", $2, $4);
+        indent_level++;
+    }
+    statements optional_else ENDIF {
+        indent_level--;
+    }
+    | IF IDENTIFIER MAJOR IDENTIFIER '\n' {
+        print_indent();
+        printf("if (%s > %s):\n", $2, $4);
+        indent_level++;
+    }
+    statements optional_else ENDIF {
+        indent_level--;
+    }
+    | IF IDENTIFIER MAJOR NUMBER '\n' {
+        print_indent();
+        printf("if (%s > %s):\n", $2, $4);
+        indent_level++;
+    }
+    statements optional_else ENDIF {
+        indent_level--;
+    }
 ;
 
 optional_else:
