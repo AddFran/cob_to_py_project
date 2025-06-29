@@ -73,7 +73,22 @@ extern int yydebug;
     DIVIDE = 274,                  /* DIVIDE  */
     FROM = 275,                    /* FROM  */
     BY = 276,                      /* BY  */
-    INTO = 277                     /* INTO  */
+    INTO = 277,                    /* INTO  */
+    GIVING = 278,                  /* GIVING  */
+    IDENTIFICATION = 279,          /* IDENTIFICATION  */
+    ENVIRONMENT = 280,             /* ENVIRONMENT  */
+    DATA = 281,                    /* DATA  */
+    FIL = 282,                     /* FIL  */
+    WORKINGSTORAGE = 283,          /* WORKINGSTORAGE  */
+    LOCALSTORAGE = 284,            /* LOCALSTORAGE  */
+    LINKAGE = 285,                 /* LINKAGE  */
+    PROCEDURE = 286,               /* PROCEDURE  */
+    DIVISION = 287,                /* DIVISION  */
+    SECTION = 288,                 /* SECTION  */
+    PROGRAMID = 289,               /* PROGRAMID  */
+    STOP = 290,                    /* STOP  */
+    RUN = 291,                     /* RUN  */
+    NEWLINE = 292                  /* NEWLINE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -86,7 +101,7 @@ union YYSTYPE
 
     char* str;
 
-#line 90 "translator.tab.h"
+#line 105 "translator.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

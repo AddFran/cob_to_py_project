@@ -10,11 +10,11 @@ int yylex() {
 
     if(c==EOF) return 0;
 
-    if(isalpha(c)){
+    if(isalnum(c)){
         char buffer[64];
         int i=0;
         buffer[i++]=c;
-        while(isalpha(c=getchar()) || c=='-'){
+        while(isalnum(c=getchar()) || c=='-' || c=='_'){
             buffer[i++]=c;
         }
         buffer[i]='\0';
@@ -48,6 +48,36 @@ int yylex() {
             return BY;
         else if(strcmp(buffer,"INTO")==0)
             return INTO;
+        else if(strcmp(buffer,"GIVING")==0)
+            return GIVING;
+
+        else if(strcmp(buffer,"DIVISION")==0)
+            return DIVISION;
+        else if(strcmp(buffer,"SECTION")==0)
+            return SECTION;
+        else if(strcmp(buffer,"STOP")==0)
+            return STOP;
+        else if(strcmp(buffer,"RUN")==0)
+            return RUN;
+
+        else if(strcmp(buffer,"IDENTIFICATION")==0)
+            return IDENTIFICATION;
+        else if(strcmp(buffer,"PROGRAM-ID")==0)
+            return PROGRAMID;
+        else if(strcmp(buffer,"ENVIRONMENT")==0)
+            return ENVIRONMENT;
+        else if(strcmp(buffer,"DATA")==0)
+            return DATA;
+        else if(strcmp(buffer,"FILE")==0)
+            return FIL;
+        else if(strcmp(buffer,"WORKING-STORAGE")==0)
+            return WORKINGSTORAGE;
+        else if(strcmp(buffer,"LOCAL-STORAGE")==0)
+            return LOCALSTORAGE;
+        else if(strcmp(buffer,"LINKAGE")==0)
+            return LINKAGE;
+        else if(strcmp(buffer,"PROCEDURE")==0)
+            return PROCEDURE;
         else{
             yylval.str = strdup(buffer); 
             return IDENTIFIER;
@@ -78,7 +108,8 @@ int yylex() {
         return STRING;
     }
 
-    if(c=='\n') return '\n';
+    if(c=='\n') return NEWLINE;
+    if(c=='.') return '.';
     if(c=='=') return EQUALS;
     if(c=='<') return MINOR;
     if(c=='>') return MAJOR;

@@ -26,7 +26,12 @@ void print_indent() {
 %token <str> NUMBER
 %token MOVE TO
 %token ADD SUBTRACT MULTIPLY DIVIDE
-%token FROM BY INTO 
+%token FROM BY INTO GIVING
+%token IDENTIFICATION ENVIRONMENT DATA FIL WORKINGSTORAGE LOCALSTORAGE LINKAGE PROCEDURE
+%token DIVISION SECTION
+%token PROGRAMID
+%token STOP RUN
+%token NEWLINE
 
 %type statement
 %start program
@@ -39,19 +44,19 @@ program:
 ;   
 
 statement:
-    DISPLAY STRING {
+    DISPLAY STRING optional_point {
         print_indent();
         printf("print(\"%s\")\n", $2);
     }
-    | DISPLAY IDENTIFIER {
+    | DISPLAY IDENTIFIER optional_point {
         print_indent();
         printf("print(%s)\n", $2);
       }
-    | ACCEPT IDENTIFIER {
+    | ACCEPT IDENTIFIER optional_point {
         print_indent();
         printf("%s = input()\n", $2);
       }
-    | MOVE STRING TO IDENTIFIER {
+    | MOVE STRING TO IDENTIFIER optional_point {
         print_indent();
         printf("%s = \"%s\"\n", $4, $2);
     }
@@ -103,11 +108,42 @@ statement:
         print_indent();
         printf("%s /= %s\n", $2, $4);
     }
+    | IDENTIFICATION DIVISION '.' {
+        print_indent();
+        printf("# IDENTIFICATION DIVISION\n");
+    }
+    | PROGRAMID '.' IDENTIFIER '.' {
+        printf("# PROGRAM-ID: %s\n", $3);
+    }
+    | ENVIRONMENT DIVISION '.' {
+        printf("# ENVIRONMENT DIVISION\n");
+    }
+    | DATA DIVISION '.' {
+        printf("# DATA DIVISION\n");
+    }
+    | FIL SECTION '.' {
+        printf("# FILE SECTION\n");
+    }
+    | WORKINGSTORAGE SECTION '.' {
+        printf("# WORKING-STORAGE SECTION\n");
+    }
+    | LOCALSTORAGE SECTION '.' {
+        printf("# LOCAL-STORAGE SECTION\n");
+    }
+    | LINKAGE SECTION '.' {
+        printf("# LINKAGE SECTION\n");
+    }
+    | PROCEDURE DIVISION '.' {
+        printf("# PROCEDURE DIVISION\n");
+    }
+    | STOP RUN '.' {
+        printf("# STOP RUN\n");
+    }
     | if_statement
 ;
 
 if_statement:
-    IF IDENTIFIER EQUALS STRING '\n' {
+    IF IDENTIFIER EQUALS STRING NEWLINE {
         print_indent();
         printf("if (%s == \"%s\"):\n", $2, $4);
         indent_level++;
@@ -116,7 +152,7 @@ if_statement:
         indent_level--;
     }
 
-    | IF IDENTIFIER EQUALS IDENTIFIER '\n' {
+    | IF IDENTIFIER EQUALS IDENTIFIER NEWLINE {
         print_indent();
         printf("if (%s == %s):\n", $2, $4);
         indent_level++;
@@ -125,7 +161,7 @@ if_statement:
         indent_level--;
     }
 
-    | IF IDENTIFIER EQUALS NUMBER '\n' {
+    | IF IDENTIFIER EQUALS NUMBER NEWLINE {
         print_indent();
         printf("if (%s == %s):\n", $2, $4);
         indent_level++;
@@ -133,7 +169,7 @@ if_statement:
     statements optional_else ENDIF {
         indent_level--;
     }
-    | IF IDENTIFIER MINOR IDENTIFIER '\n' {
+    | IF IDENTIFIER MINOR IDENTIFIER NEWLINE {
         print_indent();
         printf("if (%s < %s):\n", $2, $4);
         indent_level++;
@@ -141,7 +177,7 @@ if_statement:
     statements optional_else ENDIF {
         indent_level--;
     }
-    | IF IDENTIFIER MINOR NUMBER '\n' {
+    | IF IDENTIFIER MINOR NUMBER NEWLINE {
         print_indent();
         printf("if (%s < %s):\n", $2, $4);
         indent_level++;
@@ -149,7 +185,7 @@ if_statement:
     statements optional_else ENDIF {
         indent_level--;
     }
-    | IF IDENTIFIER MAJOR IDENTIFIER '\n' {
+    | IF IDENTIFIER MAJOR IDENTIFIER NEWLINE {
         print_indent();
         printf("if (%s > %s):\n", $2, $4);
         indent_level++;
@@ -157,7 +193,7 @@ if_statement:
     statements optional_else ENDIF {
         indent_level--;
     }
-    | IF IDENTIFIER MAJOR NUMBER '\n' {
+    | IF IDENTIFIER MAJOR NUMBER NEWLINE {
         print_indent();
         printf("if (%s > %s):\n", $2, $4);
         indent_level++;
@@ -169,7 +205,7 @@ if_statement:
 
 optional_else:
       /* vacío */
-    | ELSE '\n' {
+    | ELSE NEWLINE {
         indent_level--; 
         print_indent();
         printf("else:\n");
@@ -178,14 +214,25 @@ optional_else:
     statements
 ;
 
+optional_point:
+    /* vacio */
+    | '.';
+
 statements:
     statement_with_newline
     | statements statement_with_newline
+    | statement newline_only
 ;
 
 statement_with_newline:
-    statement '\n'
+    statement NEWLINE
+    | NEWLINE
 ;
+
+newline_only:
+    '\n' {
+        printf("\n");
+    }
 
 %%
 
