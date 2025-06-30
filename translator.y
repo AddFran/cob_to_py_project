@@ -34,6 +34,7 @@ void print_indent() {
 %token NEWLINE
 
 %type statement
+%type <str> optional_number_identifier
 %start program
 
 %%
@@ -60,51 +61,47 @@ statement:
         print_indent();
         printf("%s = \"%s\"\n", $4, $2);
     }
-    | MOVE NUMBER TO IDENTIFIER {
+    | MOVE NUMBER TO IDENTIFIER optional_point {
         print_indent();
         printf("%s = %s\n", $4, $2);
     }
-    | MOVE IDENTIFIER TO IDENTIFIER {
+    | MOVE IDENTIFIER TO IDENTIFIER optional_point {
         print_indent();
         printf("%s = %s\n", $4, $2);
     }
-    | ADD NUMBER TO IDENTIFIER {
+    | ADD optional_number_identifier TO IDENTIFIER optional_point {
         print_indent();
         printf("%s += %s\n", $4, $2);
     }
-    | ADD IDENTIFIER TO IDENTIFIER {
+    | ADD optional_number_identifier TO optional_number_identifier GIVING IDENTIFIER optional_point {
         print_indent();
-        printf("%s += %s\n", $4, $2);
+        printf("%s = %s + %s\n", $6, $4, $2);
     }
-    | SUBTRACT NUMBER FROM IDENTIFIER {
-        print_indent();
-        printf("%s -= %s\n", $4, $2);
-    }
-    | SUBTRACT IDENTIFIER FROM IDENTIFIER {
+    | SUBTRACT optional_number_identifier FROM IDENTIFIER optional_point {
         print_indent();
         printf("%s -= %s\n", $4, $2);
     }
-    | MULTIPLY NUMBER BY IDENTIFIER {
+    | SUBTRACT optional_number_identifier FROM optional_number_identifier GIVING IDENTIFIER optional_point {
+        print_indent();
+        printf("%s = %s - %s\n", $6, $4, $2);
+    }
+    | MULTIPLY optional_number_identifier BY IDENTIFIER {
         print_indent();
         printf("%s *= %s\n", $4, $2);
     }
-    | MULTIPLY IDENTIFIER BY IDENTIFIER {
+    | MULTIPLY optional_number_identifier BY optional_number_identifier GIVING IDENTIFIER optional_point {
         print_indent();
-        printf("%s *= %s\n", $4, $2);
+        printf("%s = %s * %s\n", $6, $4, $2);
     }
-    | DIVIDE NUMBER INTO IDENTIFIER {
-        print_indent();
-        printf("%s /= %s\n", $4, $2);
-    }
-    | DIVIDE IDENTIFIER INTO IDENTIFIER {
+    | DIVIDE optional_number_identifier INTO IDENTIFIER {
         print_indent();
         printf("%s /= %s\n", $4, $2);
     }
-    | DIVIDE IDENTIFIER BY NUMBER {
+    | DIVIDE optional_number_identifier INTO optional_number_identifier GIVING IDENTIFIER optional_point {
         print_indent();
-        printf("%s /= %s\n", $2, $4);
+        printf("%s = %s / %s\n", $6, $4, $2);
     }
-    | DIVIDE IDENTIFIER BY IDENTIFIER {
+    | DIVIDE IDENTIFIER BY optional_number_identifier {
         print_indent();
         printf("%s /= %s\n", $2, $4);
     }
@@ -217,6 +214,10 @@ optional_else:
 optional_point:
     /* vacio */
     | '.';
+
+optional_number_identifier:
+    NUMBER { $$ = $1; }
+    | IDENTIFIER { $$ = $1; };
 
 statements:
     statement_with_newline
