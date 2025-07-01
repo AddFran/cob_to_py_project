@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 int yylex(void);
 void yyerror(const char *s);
@@ -12,10 +13,40 @@ void print_indent() {
     for (int i = 0; i < indent_level; i++)
         printf("    ");
 }
+
+
+typedef struct {
+    char* name;
+    char* type;  // "int", "str", "float"
+} Variable;
+
+#define MAX_VARIABLES 100
+Variable variables[MAX_VARIABLES];
+int variable_count = 0;
+
+void add_variable(const char* name, const char* type) {
+    variables[variable_count].name = strdup(name);
+    variables[variable_count].type = strdup(type);
+    variable_count++;
+}
+
+const char* get_variable_type(const char* name) {
+    for (int i = 0; i < variable_count; i++) {
+        if (strcmp(variables[i].name, name) == 0) {
+            return variables[i].type;
+        }
+    }
+    return NULL;
+}
+
 %}
 
 %union {
     char* str;
+    struct {
+        char* type;
+        char* length;
+    } picinfo;
 }
 
 %token <str> STRING IDENTIFIER
@@ -32,9 +63,14 @@ void print_indent() {
 %token PROGRAMID
 %token STOP RUN
 %token NEWLINE
+%token PIC VALUE
+%token DIGIT_X DIGIT_9 DIGIT_A DIGIT_S DIGIT_S9 DIGIT_V9
+
 
 %type statement
 %type <str> optional_number_identifier
+%type <picinfo> pic_type
+%type <str> maybe_value
 %start program
 
 %%
@@ -52,11 +88,26 @@ statement:
     | DISPLAY IDENTIFIER optional_point {
         print_indent();
         printf("print(%s)\n", $2);
-      }
+    }
     | ACCEPT IDENTIFIER optional_point {
+        const char* tipo = get_variable_type($2);
         print_indent();
-        printf("%s = input()\n", $2);
-      }
+        if (tipo == NULL) {
+            printf("%s = input()  # tipo desconocido\n", $2);
+        } 
+        else if (strcmp(tipo, "int") == 0) {
+            printf("%s = int(input())\n", $2);
+        } 
+        else if (strcmp(tipo, "float") == 0) {
+            printf("%s = float(input())\n", $2);
+        } 
+        else if (strcmp(tipo, "str") == 0) {
+            printf("%s = str(input())\n", $2); 
+        } 
+        else {
+            printf("%s = input()  # tipo de dato no manejado: %s\n", $2, tipo);
+        }
+    }
     | MOVE STRING TO IDENTIFIER optional_point {
         print_indent();
         printf("%s = \"%s\"\n", $4, $2);
@@ -135,6 +186,15 @@ statement:
     }
     | STOP RUN '.' {
         printf("# STOP RUN\n");
+    }
+    | NUMBER IDENTIFIER PIC pic_type maybe_value '.' {
+        add_variable($2, $4.type);
+        printf("# var %s: %s%s%s\n", 
+            $2,                 
+            $4.type,            
+            $4.length != NULL ? $4.length : "", 
+            $5 != NULL ? $5 : ""
+        );
     }
     | if_statement
 ;
@@ -218,6 +278,47 @@ optional_point:
 optional_number_identifier:
     NUMBER { $$ = $1; }
     | IDENTIFIER { $$ = $1; };
+
+pic_type:
+    NUMBER '(' NUMBER ')' {
+        $$.type = strdup("int");
+        $$.length = strdup($3);
+    }
+    | NUMBER '(' NUMBER ')' DIGIT_V9 '(' NUMBER ')' {
+        $$.type = strdup("float");
+        $$.length = strdup($3);
+    }
+    | 'X' '(' NUMBER ')' {
+        $$.type = strdup("str");
+        $$.length = strdup($3);
+    }
+    | 'A' '(' NUMBER ')' {
+        $$.type = strdup("str");
+        $$.length = strdup($3);
+    }
+    | DIGIT_S9 '(' NUMBER ')' {
+        $$.type = strdup("int");
+        $$.length = strdup($3);
+    }
+    | DIGIT_S9 '(' NUMBER ')' DIGIT_V9 '(' NUMBER ')' {
+        $$.type = strdup("float");
+        $$.length = strdup($3);
+    }
+;
+
+maybe_value:
+    /* vacío */ { $$ = NULL; }
+    | VALUE STRING {
+        char* buf = malloc(strlen($2) + 10);
+        sprintf(buf, " = \"%s\"", $2);
+        $$ = buf;
+    }
+    | VALUE NUMBER {
+        char* buf = malloc(strlen($2) + 10);
+        sprintf(buf, " = %s", $2);
+        $$ = buf;
+    }
+;
 
 statements:
     statement_with_newline

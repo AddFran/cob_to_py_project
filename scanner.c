@@ -10,6 +10,19 @@ int yylex() {
 
     if(c==EOF) return 0;
 
+    if(isdigit(c)){
+        char buffer[64];
+        int i=0;
+        buffer[i++]=c;
+        while (isdigit(c=getchar())){
+            buffer[i++]=c;
+        }
+        buffer[i]='\0';
+        ungetc(c,stdin);
+        yylval.str=strdup(buffer);
+        return NUMBER;
+    }
+
     if(isalnum(c)){
         char buffer[64];
         int i=0;
@@ -22,6 +35,22 @@ int yylex() {
         
         if(strcmp(buffer,"DISPLAY")==0)
             return DISPLAY;
+        else if(strcmp(buffer,"PIC")==0)
+            return PIC;
+        else if(strcmp(buffer,"VALUE")==0)
+            return VALUE;
+        else if(strcmp(buffer,"9")==0)
+            return '9';
+        else if(strcmp(buffer,"X")==0)
+            return 'X';
+        else if(strcmp(buffer,"A")==0)
+            return 'A';
+        else if(strcmp(buffer,"S")==0)
+            return 'S';
+        else if(strcmp(buffer,"S9")==0)
+            return DIGIT_S9;
+        else if(strcmp(buffer,"V9")==0)
+            return DIGIT_V9;
         else if(strcmp(buffer,"ACCEPT")==0)
             return ACCEPT;
         else if(strcmp(buffer,"IF")==0)
@@ -78,26 +107,16 @@ int yylex() {
             return LINKAGE;
         else if(strcmp(buffer,"PROCEDURE")==0)
             return PROCEDURE;
+
+        
+
         else{
             yylval.str = strdup(buffer); 
             return IDENTIFIER;
         }
     }
 
-    if(isdigit(c)){
-        char buffer[64];
-        int i=0;
-        buffer[i++]=c;
-        while (isdigit(c=getchar())){
-            buffer[i++]=c;
-        }
-        buffer[i]='\0';
-        ungetc(c,stdin);
-        yylval.str=strdup(buffer);
-        return NUMBER;
-    }
-
-    if(c=='"'){
+    else if(c=='"'){
         char buffer[256];
         int i=0;
         while((c=getchar())!='"' && c!=EOF){
@@ -113,8 +132,9 @@ int yylex() {
     if(c=='=') return EQUALS;
     if(c=='<') return MINOR;
     if(c=='>') return MAJOR;
+    if(c=='(') return '(';
+    if(c==')') return ')';
 
-    
 
     return c;
 }

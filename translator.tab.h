@@ -88,7 +88,15 @@ extern int yydebug;
     PROGRAMID = 289,               /* PROGRAMID  */
     STOP = 290,                    /* STOP  */
     RUN = 291,                     /* RUN  */
-    NEWLINE = 292                  /* NEWLINE  */
+    NEWLINE = 292,                 /* NEWLINE  */
+    PIC = 293,                     /* PIC  */
+    VALUE = 294,                   /* VALUE  */
+    DIGIT_X = 295,                 /* DIGIT_X  */
+    DIGIT_9 = 296,                 /* DIGIT_9  */
+    DIGIT_A = 297,                 /* DIGIT_A  */
+    DIGIT_S = 298,                 /* DIGIT_S  */
+    DIGIT_S9 = 299,                /* DIGIT_S9  */
+    DIGIT_V9 = 300                 /* DIGIT_V9  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -97,11 +105,15 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 17 "translator.y"
+#line 44 "translator.y"
 
     char* str;
+    struct {
+        char* type;
+        char* length;
+    } picinfo;
 
-#line 105 "translator.tab.h"
+#line 117 "translator.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
