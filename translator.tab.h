@@ -86,17 +86,19 @@ extern int yydebug;
     DIVISION = 287,                /* DIVISION  */
     SECTION = 288,                 /* SECTION  */
     PROGRAMID = 289,               /* PROGRAMID  */
-    STOP = 290,                    /* STOP  */
-    RUN = 291,                     /* RUN  */
-    NEWLINE = 292,                 /* NEWLINE  */
-    PIC = 293,                     /* PIC  */
-    VALUE = 294,                   /* VALUE  */
-    DIGIT_X = 295,                 /* DIGIT_X  */
-    DIGIT_9 = 296,                 /* DIGIT_9  */
-    DIGIT_A = 297,                 /* DIGIT_A  */
-    DIGIT_S = 298,                 /* DIGIT_S  */
-    DIGIT_S9 = 299,                /* DIGIT_S9  */
-    DIGIT_V9 = 300                 /* DIGIT_V9  */
+    END = 290,                     /* END  */
+    PROGRAM = 291,                 /* PROGRAM  */
+    STOP = 292,                    /* STOP  */
+    RUN = 293,                     /* RUN  */
+    NEWLINE = 294,                 /* NEWLINE  */
+    PIC = 295,                     /* PIC  */
+    VALUE = 296,                   /* VALUE  */
+    DIGIT_X = 297,                 /* DIGIT_X  */
+    DIGIT_9 = 298,                 /* DIGIT_9  */
+    DIGIT_A = 299,                 /* DIGIT_A  */
+    DIGIT_S = 300,                 /* DIGIT_S  */
+    DIGIT_S9 = 301,                /* DIGIT_S9  */
+    DIGIT_V9 = 302                 /* DIGIT_V9  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -113,7 +115,7 @@ union YYSTYPE
         char* length;
     } picinfo;
 
-#line 117 "translator.tab.h"
+#line 119 "translator.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -1,20 +1,37 @@
-IDENTIFICATION DIVISION.
-PROGRAM-ID. HOLA.
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. 01HOLA_MUNDO.
 
-DATA DIVISION.
-WORKING-STORAGE SECTION.
-    01 EDAD         PIC 9(2).
-    01 NOMBRE       PIC A(10).
-    01 MENSAJE      PIC X(30).
-    01 SALARIO      PIC S9(5).
-    01 EDAD1        PIC 9(2)       VALUE 18.
-    01 NOMBRE       PIC A(10)      VALUE "JUAN".
-    01 MENSAJE      PIC X(30)      VALUE "BIENVENIDO".
-    01 SALARIO      PIC S9(5)      VALUE 01234.
-    01 DECIMILASO   PIC S9(5)V9(2).
+       ENVIRONMENT DIVISION.
 
-PROCEDURE DIVISION.
-    ACCEPT EDAD.
-    ACCEPT NOMBRE.
-    ACCEPT MENSAJE.
-    ACCEPT DECIMILASO.
+       DATA DIVISION.
+       FILE SECTION.
+       WORKING-STORAGE SECTION.
+       01 DATOS.
+           02 NOMBRE PIC A(30).
+           02 APELLIDO PIC A(30).
+           02 NUM PIC 9(10).
+           02 NUM2 PIC 9(10) VALUE 12.
+           02 CHAR PIC A(10) VALUE "habla caus".
+       LOCAL-STORAGE SECTION.
+           77 APELLIDO-USUARIO PIC A(30).
+       LINKAGE SECTION.
+
+       PROCEDURE DIVISION.
+           DISPLAY NUM2.
+           DISPLAY "Ingrese su nombre: ".
+           ACCEPT NOMBRE.
+           DISPLAY "Ingrese su apellido: ".
+           ACCEPT APELLIDO.
+           ADD NUM2 TO 24 GIVING NUM.
+           IF NOMBRE = "ADRIANO"
+               DISPLAY "YO TE CONOZCO"
+               IF NOMBRE = "ADRIANO"
+                   DISPLAY "YO TE CONOZCO DE NUEVO"
+               ELSE
+                   DISPLAY "GLAKLSFKDLASKDLAK"
+               END-IF
+           ELSE
+               DISPLAY "QUIEN ERES"
+           END-IF.
+           DISPLAY "JALOU"
+       STOP RUN.

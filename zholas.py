@@ -1,18 +1,32 @@
 # IDENTIFICATION DIVISION
-# PROGRAM-ID: HOLA
+# PROGRAM-ID: 01HOLA_MUNDO
+# ENVIRONMENT DIVISION
 # DATA DIVISION
+# FILE SECTION
 # WORKING-STORAGE SECTION
-# var EDAD: int2
-# var NOMBRE: str10
-# var MENSAJE: str30
-# var SALARIO: int5
-# var EDAD1: int2 = 18
-# var NOMBRE: str10 = "JUAN"
-# var MENSAJE: str30 = "BIENVENIDO"
-# var SALARIO: int5 = 01234
-# var DECIMILASO: float5
+# NIVEL 01 DE VARIABLES DATOS
+# var NOMBRE: str30
+# var APELLIDO: str30
+# var NUM: int10
+NUM2  = 12
+CHAR  = "habla caus"
+# LOCAL-STORAGE SECTION
+# var APELLIDO-USUARIO: str30
+# LINKAGE SECTION
 # PROCEDURE DIVISION
-EDAD = int(input())
+print(NUM2)
+print("Ingrese su nombre: ")
 NOMBRE = str(input())
-MENSAJE = str(input())
-DECIMILASO = float(input())
+print("Ingrese su apellido: ")
+APELLIDO = str(input())
+NUM = 24 + NUM2
+if (NOMBRE == "ADRIANO"):
+    print("YO TE CONOZCO")
+    if (NOMBRE == "ADRIANO"):
+        print("YO TE CONOZCO DE NUEVO")
+    else:
+        print("GLAKLSFKDLASKDLAK")
+else:
+    print("QUIEN ERES")
+print("JALOU")
+# STOP RUN

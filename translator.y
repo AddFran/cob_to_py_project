@@ -17,7 +17,7 @@ void print_indent() {
 
 typedef struct {
     char* name;
-    char* type;  // "int", "str", "float"
+    char* type; 
 } Variable;
 
 #define MAX_VARIABLES 100
@@ -61,6 +61,8 @@ const char* get_variable_type(const char* name) {
 %token IDENTIFICATION ENVIRONMENT DATA FIL WORKINGSTORAGE LOCALSTORAGE LINKAGE PROCEDURE
 %token DIVISION SECTION
 %token PROGRAMID
+%token END
+%token PROGRAM
 %token STOP RUN
 %token NEWLINE
 %token PIC VALUE
@@ -163,6 +165,9 @@ statement:
     | PROGRAMID '.' IDENTIFIER '.' {
         printf("# PROGRAM-ID: %s\n", $3);
     }
+    | PROGRAMID '.' NUMBER IDENTIFIER '.' {
+        printf("# PROGRAM-ID: %s%s\n", $3, $4);
+    }
     | ENVIRONMENT DIVISION '.' {
         printf("# ENVIRONMENT DIVISION\n");
     }
@@ -187,14 +192,25 @@ statement:
     | STOP RUN '.' {
         printf("# STOP RUN\n");
     }
+    | NUMBER IDENTIFIER '.' {
+        printf("# NIVEL %s DE VARIABLES %s\n", $1, $2);
+    }
     | NUMBER IDENTIFIER PIC pic_type maybe_value '.' {
         add_variable($2, $4.type);
-        printf("# var %s: %s%s%s\n", 
+        if($5 == NULL){
+            printf("# var %s: %s%s%s\n", 
             $2,                 
             $4.type,            
             $4.length != NULL ? $4.length : "", 
             $5 != NULL ? $5 : ""
-        );
+            );
+        }
+        else{
+            printf("%s %s\n", 
+                $2,                 
+                $5 != NULL ? $5 : ""
+            );
+        }
     }
     | if_statement
 ;
@@ -205,7 +221,7 @@ if_statement:
         printf("if (%s == \"%s\"):\n", $2, $4);
         indent_level++;
     }
-    statements optional_else ENDIF {
+    statements optional_else ENDIF optional_point {
         indent_level--;
     }
 
@@ -214,7 +230,7 @@ if_statement:
         printf("if (%s == %s):\n", $2, $4);
         indent_level++;
     }
-    statements optional_else ENDIF {
+    statements optional_else ENDIF optional_point {
         indent_level--;
     }
 
@@ -223,7 +239,7 @@ if_statement:
         printf("if (%s == %s):\n", $2, $4);
         indent_level++;
     }
-    statements optional_else ENDIF {
+    statements optional_else ENDIF optional_point {
         indent_level--;
     }
     | IF IDENTIFIER MINOR IDENTIFIER NEWLINE {
@@ -231,7 +247,7 @@ if_statement:
         printf("if (%s < %s):\n", $2, $4);
         indent_level++;
     }
-    statements optional_else ENDIF {
+    statements optional_else ENDIF optional_point {
         indent_level--;
     }
     | IF IDENTIFIER MINOR NUMBER NEWLINE {
@@ -239,7 +255,7 @@ if_statement:
         printf("if (%s < %s):\n", $2, $4);
         indent_level++;
     }
-    statements optional_else ENDIF {
+    statements optional_else ENDIF optional_point {
         indent_level--;
     }
     | IF IDENTIFIER MAJOR IDENTIFIER NEWLINE {
@@ -247,7 +263,7 @@ if_statement:
         printf("if (%s > %s):\n", $2, $4);
         indent_level++;
     }
-    statements optional_else ENDIF {
+    statements optional_else ENDIF optional_point {
         indent_level--;
     }
     | IF IDENTIFIER MAJOR NUMBER NEWLINE {
@@ -255,7 +271,7 @@ if_statement:
         printf("if (%s > %s):\n", $2, $4);
         indent_level++;
     }
-    statements optional_else ENDIF {
+    statements optional_else ENDIF optional_point {
         indent_level--;
     }
 ;

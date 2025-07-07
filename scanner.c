@@ -127,13 +127,13 @@ int yylex() {
         return STRING;
     }
 
-    if(c=='\n') return NEWLINE;
-    if(c=='.') return '.';
-    if(c=='=') return EQUALS;
-    if(c=='<') return MINOR;
-    if(c=='>') return MAJOR;
-    if(c=='(') return '(';
-    if(c==')') return ')';
+    else if(c=='\n') return NEWLINE;
+    else if(c=='.') return '.';
+    else if(c=='=') return EQUALS;
+    else if(c=='<') return MINOR;
+    else if(c=='>') return MAJOR;
+    else if(c=='(') return '(';
+    else if(c==')') return ')';
 
 
     return c;
