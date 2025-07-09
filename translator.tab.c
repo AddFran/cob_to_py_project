@@ -77,11 +77,10 @@
 
 int yylex(void);
 void yyerror(const char *s);
+int indent_level=0;
 
-int indent_level = 0;
-
-void print_indent() {
-    for (int i = 0; i < indent_level; i++)
+void print_indent(){
+    for(int i=0;i<indent_level;i++)
         printf("    ");
 }
 
@@ -92,17 +91,17 @@ typedef struct {
 
 #define MAX_VARIABLES 100
 Variable variables[MAX_VARIABLES];
-int variable_count = 0;
+int variable_count=0;
 
-void add_variable(const char* name, const char* type) {
-    variables[variable_count].name = strdup(name);
-    variables[variable_count].type = strdup(type);
+void add_variable(const char* name, const char* type){
+    variables[variable_count].name=strdup(name);
+    variables[variable_count].type=strdup(type);
     variable_count++;
 }
 
-const char* get_variable_type(const char* name) {
-    for (int i = 0; i < variable_count; i++) {
-        if (strcmp(variables[i].name, name) == 0) {
+const char* get_variable_type(const char* name){
+    for (int i=0;i<variable_count;i++){
+        if(strcmp(variables[i].name,name)==0){
             return variables[i].type;
         }
     }
@@ -110,7 +109,7 @@ const char* get_variable_type(const char* name) {
 }
 
 
-#line 114 "translator.tab.c"
+#line 113 "translator.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -604,13 +603,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    83,    83,    85,    89,    93,    97,   116,   120,   124,
-     128,   132,   136,   140,   144,   148,   152,   156,   160,   164,
-     168,   171,   174,   177,   180,   183,   186,   189,   192,   195,
-     198,   201,   218,   219,   223,   223,   234,   236,   236,   246,
-     249,   252,   255,   258,   261,   264,   270,   270,   278,   278,
-     290,   292,   295,   296,   299,   303,   307,   311,   315,   319,
-     326,   327,   332,   340,   341,   342,   346,   347,   351
+       0,    82,    82,    84,    88,    92,    96,   115,   119,   123,
+     127,   131,   135,   139,   143,   147,   151,   155,   159,   163,
+     167,   170,   173,   176,   179,   182,   185,   188,   191,   194,
+     197,   200,   214,   215,   219,   219,   230,   232,   232,   242,
+     245,   248,   251,   254,   257,   260,   266,   266,   274,   274,
+     286,   288,   291,   292,   295,   299,   303,   307,   311,   315,
+     322,   323,   328,   336,   337,   338,   342,   343,   347
 };
 #endif
 
@@ -1295,257 +1294,257 @@ yyreduce:
   switch (yyn)
     {
   case 4: /* statement: DISPLAY STRING optional_point  */
-#line 89 "translator.y"
+#line 88 "translator.y"
                                   {
         print_indent();
-        printf("print(\"%s\")\n", (yyvsp[-1].str));
+        printf("print(\"%s\")\n",(yyvsp[-1].str));
     }
-#line 1304 "translator.tab.c"
+#line 1303 "translator.tab.c"
     break;
 
   case 5: /* statement: DISPLAY IDENTIFIER optional_point  */
-#line 93 "translator.y"
+#line 92 "translator.y"
                                         {
         print_indent();
-        printf("print(%s)\n", (yyvsp[-1].str));
+        printf("print(%s)\n",(yyvsp[-1].str));
     }
-#line 1313 "translator.tab.c"
+#line 1312 "translator.tab.c"
     break;
 
   case 6: /* statement: ACCEPT IDENTIFIER optional_point  */
-#line 97 "translator.y"
+#line 96 "translator.y"
                                        {
-        const char* tipo = get_variable_type((yyvsp[-1].str));
+        const char* tipo=get_variable_type((yyvsp[-1].str));
         print_indent();
-        if (tipo == NULL) {
-            printf("%s = input()  # tipo desconocido\n", (yyvsp[-1].str));
+        if(tipo==NULL) {
+            printf("%s = input()  # tipo desconocido\n",(yyvsp[-1].str));
         } 
-        else if (strcmp(tipo, "int") == 0) {
-            printf("%s = int(input())\n", (yyvsp[-1].str));
+        else if(strcmp(tipo,"int")==0) {
+            printf("%s = int(input())\n",(yyvsp[-1].str));
         } 
-        else if (strcmp(tipo, "float") == 0) {
-            printf("%s = float(input())\n", (yyvsp[-1].str));
+        else if(strcmp(tipo,"float")==0) {
+            printf("%s = float(input())\n",(yyvsp[-1].str));
         } 
-        else if (strcmp(tipo, "str") == 0) {
-            printf("%s = str(input())\n", (yyvsp[-1].str)); 
+        else if(strcmp(tipo, "str")==0) {
+            printf("%s = str(input())\n",(yyvsp[-1].str)); 
         } 
-        else {
-            printf("%s = input()  # tipo de dato no manejado: %s\n", (yyvsp[-1].str), tipo);
+        else{
+            printf("%s=input()  # tipo de dato no manejado: %s\n",(yyvsp[-1].str),tipo);
         }
     }
-#line 1337 "translator.tab.c"
+#line 1336 "translator.tab.c"
     break;
 
   case 7: /* statement: MOVE STRING TO IDENTIFIER optional_point  */
-#line 116 "translator.y"
+#line 115 "translator.y"
                                                {
         print_indent();
-        printf("%s = \"%s\"\n", (yyvsp[-1].str), (yyvsp[-3].str));
+        printf("%s = \"%s\"\n",(yyvsp[-1].str),(yyvsp[-3].str));
     }
-#line 1346 "translator.tab.c"
+#line 1345 "translator.tab.c"
     break;
 
   case 8: /* statement: MOVE NUMBER TO IDENTIFIER optional_point  */
-#line 120 "translator.y"
+#line 119 "translator.y"
                                                {
         print_indent();
-        printf("%s = %s\n", (yyvsp[-1].str), (yyvsp[-3].str));
+        printf("%s = %s\n",(yyvsp[-1].str),(yyvsp[-3].str));
     }
-#line 1355 "translator.tab.c"
+#line 1354 "translator.tab.c"
     break;
 
   case 9: /* statement: MOVE IDENTIFIER TO IDENTIFIER optional_point  */
-#line 124 "translator.y"
+#line 123 "translator.y"
                                                    {
         print_indent();
-        printf("%s = %s\n", (yyvsp[-1].str), (yyvsp[-3].str));
+        printf("%s = %s\n",(yyvsp[-1].str),(yyvsp[-3].str));
     }
-#line 1364 "translator.tab.c"
+#line 1363 "translator.tab.c"
     break;
 
   case 10: /* statement: ADD optional_number_identifier TO IDENTIFIER optional_point  */
-#line 128 "translator.y"
+#line 127 "translator.y"
                                                                   {
         print_indent();
-        printf("%s += %s\n", (yyvsp[-1].str), (yyvsp[-3].str));
+        printf("%s += %s\n",(yyvsp[-1].str),(yyvsp[-3].str));
     }
-#line 1373 "translator.tab.c"
+#line 1372 "translator.tab.c"
     break;
 
   case 11: /* statement: ADD optional_number_identifier TO optional_number_identifier GIVING IDENTIFIER optional_point  */
-#line 132 "translator.y"
+#line 131 "translator.y"
                                                                                                     {
         print_indent();
-        printf("%s = %s + %s\n", (yyvsp[-1].str), (yyvsp[-3].str), (yyvsp[-5].str));
+        printf("%s = %s + %s\n",(yyvsp[-1].str),(yyvsp[-3].str),(yyvsp[-5].str));
     }
-#line 1382 "translator.tab.c"
+#line 1381 "translator.tab.c"
     break;
 
   case 12: /* statement: SUBTRACT optional_number_identifier FROM IDENTIFIER optional_point  */
-#line 136 "translator.y"
+#line 135 "translator.y"
                                                                          {
         print_indent();
-        printf("%s -= %s\n", (yyvsp[-1].str), (yyvsp[-3].str));
+        printf("%s -= %s\n",(yyvsp[-1].str),(yyvsp[-3].str));
     }
-#line 1391 "translator.tab.c"
+#line 1390 "translator.tab.c"
     break;
 
   case 13: /* statement: SUBTRACT optional_number_identifier FROM optional_number_identifier GIVING IDENTIFIER optional_point  */
-#line 140 "translator.y"
+#line 139 "translator.y"
                                                                                                            {
         print_indent();
-        printf("%s = %s - %s\n", (yyvsp[-1].str), (yyvsp[-3].str), (yyvsp[-5].str));
+        printf("%s = %s - %s\n",(yyvsp[-1].str),(yyvsp[-3].str),(yyvsp[-5].str));
     }
-#line 1400 "translator.tab.c"
+#line 1399 "translator.tab.c"
     break;
 
   case 14: /* statement: MULTIPLY optional_number_identifier BY IDENTIFIER  */
-#line 144 "translator.y"
+#line 143 "translator.y"
                                                         {
         print_indent();
-        printf("%s *= %s\n", (yyvsp[0].str), (yyvsp[-2].str));
+        printf("%s *= %s\n",(yyvsp[0].str),(yyvsp[-2].str));
     }
-#line 1409 "translator.tab.c"
+#line 1408 "translator.tab.c"
     break;
 
   case 15: /* statement: MULTIPLY optional_number_identifier BY optional_number_identifier GIVING IDENTIFIER optional_point  */
-#line 148 "translator.y"
+#line 147 "translator.y"
                                                                                                          {
         print_indent();
-        printf("%s = %s * %s\n", (yyvsp[-1].str), (yyvsp[-3].str), (yyvsp[-5].str));
+        printf("%s = %s * %s\n",(yyvsp[-1].str),(yyvsp[-3].str),(yyvsp[-5].str));
     }
-#line 1418 "translator.tab.c"
+#line 1417 "translator.tab.c"
     break;
 
   case 16: /* statement: DIVIDE optional_number_identifier INTO IDENTIFIER  */
-#line 152 "translator.y"
+#line 151 "translator.y"
                                                         {
         print_indent();
-        printf("%s /= %s\n", (yyvsp[0].str), (yyvsp[-2].str));
+        printf("%s /= %s\n",(yyvsp[0].str),(yyvsp[-2].str));
     }
-#line 1427 "translator.tab.c"
+#line 1426 "translator.tab.c"
     break;
 
   case 17: /* statement: DIVIDE optional_number_identifier INTO optional_number_identifier GIVING IDENTIFIER optional_point  */
-#line 156 "translator.y"
+#line 155 "translator.y"
                                                                                                          {
         print_indent();
-        printf("%s = %s / %s\n", (yyvsp[-1].str), (yyvsp[-3].str), (yyvsp[-5].str));
+        printf("%s = %s / %s\n",(yyvsp[-1].str),(yyvsp[-3].str),(yyvsp[-5].str));
     }
-#line 1436 "translator.tab.c"
+#line 1435 "translator.tab.c"
     break;
 
   case 18: /* statement: DIVIDE IDENTIFIER BY optional_number_identifier  */
-#line 160 "translator.y"
+#line 159 "translator.y"
                                                       {
         print_indent();
-        printf("%s /= %s\n", (yyvsp[-2].str), (yyvsp[0].str));
+        printf("%s /= %s\n",(yyvsp[-2].str),(yyvsp[0].str));
     }
-#line 1445 "translator.tab.c"
+#line 1444 "translator.tab.c"
     break;
 
   case 19: /* statement: IDENTIFICATION DIVISION '.'  */
-#line 164 "translator.y"
+#line 163 "translator.y"
                                   {
         print_indent();
         printf("# IDENTIFICATION DIVISION\n");
     }
-#line 1454 "translator.tab.c"
+#line 1453 "translator.tab.c"
     break;
 
   case 20: /* statement: PROGRAMID '.' IDENTIFIER '.'  */
-#line 168 "translator.y"
+#line 167 "translator.y"
                                    {
-        printf("# PROGRAM-ID: %s\n", (yyvsp[-1].str));
+        printf("# PROGRAM-ID: %s\n",(yyvsp[-1].str));
     }
-#line 1462 "translator.tab.c"
+#line 1461 "translator.tab.c"
     break;
 
   case 21: /* statement: PROGRAMID '.' NUMBER IDENTIFIER '.'  */
-#line 171 "translator.y"
+#line 170 "translator.y"
                                           {
-        printf("# PROGRAM-ID: %s%s\n", (yyvsp[-2].str), (yyvsp[-1].str));
+        printf("# PROGRAM-ID: %s%s\n",(yyvsp[-2].str),(yyvsp[-1].str));
     }
-#line 1470 "translator.tab.c"
+#line 1469 "translator.tab.c"
     break;
 
   case 22: /* statement: ENVIRONMENT DIVISION '.'  */
-#line 174 "translator.y"
+#line 173 "translator.y"
                                {
         printf("# ENVIRONMENT DIVISION\n");
     }
-#line 1478 "translator.tab.c"
+#line 1477 "translator.tab.c"
     break;
 
   case 23: /* statement: DATA DIVISION '.'  */
-#line 177 "translator.y"
+#line 176 "translator.y"
                         {
         printf("# DATA DIVISION\n");
     }
-#line 1486 "translator.tab.c"
+#line 1485 "translator.tab.c"
     break;
 
   case 24: /* statement: FIL SECTION '.'  */
-#line 180 "translator.y"
+#line 179 "translator.y"
                       {
         printf("# FILE SECTION\n");
     }
-#line 1494 "translator.tab.c"
+#line 1493 "translator.tab.c"
     break;
 
   case 25: /* statement: WORKINGSTORAGE SECTION '.'  */
-#line 183 "translator.y"
+#line 182 "translator.y"
                                  {
         printf("# WORKING-STORAGE SECTION\n");
     }
-#line 1502 "translator.tab.c"
+#line 1501 "translator.tab.c"
     break;
 
   case 26: /* statement: LOCALSTORAGE SECTION '.'  */
-#line 186 "translator.y"
+#line 185 "translator.y"
                                {
         printf("# LOCAL-STORAGE SECTION\n");
     }
-#line 1510 "translator.tab.c"
+#line 1509 "translator.tab.c"
     break;
 
   case 27: /* statement: LINKAGE SECTION '.'  */
-#line 189 "translator.y"
+#line 188 "translator.y"
                           {
         printf("# LINKAGE SECTION\n");
     }
-#line 1518 "translator.tab.c"
+#line 1517 "translator.tab.c"
     break;
 
   case 28: /* statement: PROCEDURE DIVISION '.'  */
-#line 192 "translator.y"
+#line 191 "translator.y"
                              {
         printf("# PROCEDURE DIVISION\n");
     }
-#line 1526 "translator.tab.c"
+#line 1525 "translator.tab.c"
     break;
 
   case 29: /* statement: STOP RUN '.'  */
-#line 195 "translator.y"
+#line 194 "translator.y"
                    {
         printf("# STOP RUN\n");
     }
-#line 1534 "translator.tab.c"
+#line 1533 "translator.tab.c"
     break;
 
   case 30: /* statement: NUMBER IDENTIFIER '.'  */
-#line 198 "translator.y"
+#line 197 "translator.y"
                             {
-        printf("# NIVEL %s DE VARIABLES %s\n", (yyvsp[-2].str), (yyvsp[-1].str));
+        printf("# NIVEL %s DE VARIABLES %s\n",(yyvsp[-2].str),(yyvsp[-1].str));
     }
-#line 1542 "translator.tab.c"
+#line 1541 "translator.tab.c"
     break;
 
   case 31: /* statement: NUMBER IDENTIFIER PIC pic_type maybe_value '.'  */
-#line 201 "translator.y"
+#line 200 "translator.y"
                                                      {
-        add_variable((yyvsp[-4].str), (yyvsp[-2].picinfo).type);
-        if((yyvsp[-1].str) == NULL){
+        add_variable((yyvsp[-4].str),(yyvsp[-2].picinfo).type);
+        if((yyvsp[-1].str)==NULL){
             printf("# var %s: %s%s%s\n", 
             (yyvsp[-4].str),                 
             (yyvsp[-2].picinfo).type,            
@@ -1554,240 +1553,237 @@ yyreduce:
             );
         }
         else{
-            printf("%s%s\n", 
-                (yyvsp[-4].str),                 
-                (yyvsp[-1].str) != NULL ? (yyvsp[-1].str) : ""
-            );
+            printf("%s%s\n",(yyvsp[-4].str),(yyvsp[-1].str) != NULL ? (yyvsp[-1].str) : "");
         }
     }
-#line 1564 "translator.tab.c"
+#line 1560 "translator.tab.c"
     break;
 
   case 34: /* $@1: %empty  */
-#line 223 "translator.y"
+#line 219 "translator.y"
                            {
         print_indent();
-        printf("if (%s):\n", (yyvsp[-1].str));
+        printf("if (%s):\n",(yyvsp[-1].str));
         indent_level++;
         free((yyvsp[-1].str));  
     }
-#line 1575 "translator.tab.c"
+#line 1571 "translator.tab.c"
     break;
 
   case 35: /* if_statement: IF conditional NEWLINE $@1 statements optional_else ENDIF optional_point  */
-#line 229 "translator.y"
+#line 225 "translator.y"
                                                   {
         indent_level--;
     }
-#line 1583 "translator.tab.c"
+#line 1579 "translator.tab.c"
     break;
 
   case 37: /* $@2: %empty  */
-#line 236 "translator.y"
+#line 232 "translator.y"
                    {
         indent_level--; 
         print_indent();
         printf("else:\n");
         indent_level++; 
     }
-#line 1594 "translator.tab.c"
+#line 1590 "translator.tab.c"
     break;
 
   case 39: /* conditional: IDENTIFIER EQUALS IDENTIFIER  */
-#line 246 "translator.y"
+#line 242 "translator.y"
                                  { 
-        asprintf(&(yyval.str), "%s == %s", (yyvsp[-2].str), (yyvsp[0].str)); 
+        asprintf(&(yyval.str), "%s == %s",(yyvsp[-2].str),(yyvsp[0].str)); 
     }
-#line 1602 "translator.tab.c"
+#line 1598 "translator.tab.c"
     break;
 
   case 40: /* conditional: IDENTIFIER EQUALS NUMBER  */
-#line 249 "translator.y"
+#line 245 "translator.y"
                                { 
-        asprintf(&(yyval.str), "%s == %s", (yyvsp[-2].str), (yyvsp[0].str)); 
+        asprintf(&(yyval.str), "%s == %s",(yyvsp[-2].str),(yyvsp[0].str)); 
     }
-#line 1610 "translator.tab.c"
+#line 1606 "translator.tab.c"
     break;
 
   case 41: /* conditional: IDENTIFIER EQUALS STRING  */
-#line 252 "translator.y"
+#line 248 "translator.y"
                                { 
-        asprintf(&(yyval.str), "%s == \"%s\"", (yyvsp[-2].str), (yyvsp[0].str)); 
+        asprintf(&(yyval.str), "%s == \"%s\"",(yyvsp[-2].str),(yyvsp[0].str)); 
     }
-#line 1618 "translator.tab.c"
+#line 1614 "translator.tab.c"
     break;
 
   case 42: /* conditional: IDENTIFIER MINOR IDENTIFIER  */
-#line 255 "translator.y"
+#line 251 "translator.y"
                                   { 
-        asprintf(&(yyval.str), "%s < %s", (yyvsp[-2].str), (yyvsp[0].str)); 
+        asprintf(&(yyval.str), "%s < %s",(yyvsp[-2].str),(yyvsp[0].str)); 
     }
-#line 1626 "translator.tab.c"
+#line 1622 "translator.tab.c"
     break;
 
   case 43: /* conditional: IDENTIFIER MINOR NUMBER  */
-#line 258 "translator.y"
+#line 254 "translator.y"
                               { 
-        asprintf(&(yyval.str), "%s < %s", (yyvsp[-2].str), (yyvsp[0].str)); 
+        asprintf(&(yyval.str), "%s < %s",(yyvsp[-2].str),(yyvsp[0].str)); 
     }
-#line 1634 "translator.tab.c"
+#line 1630 "translator.tab.c"
     break;
 
   case 44: /* conditional: IDENTIFIER MAJOR IDENTIFIER  */
-#line 261 "translator.y"
+#line 257 "translator.y"
                                   { 
-        asprintf(&(yyval.str), "%s > %s", (yyvsp[-2].str), (yyvsp[0].str)); 
+        asprintf(&(yyval.str), "%s > %s",(yyvsp[-2].str),(yyvsp[0].str)); 
     }
-#line 1642 "translator.tab.c"
+#line 1638 "translator.tab.c"
     break;
 
   case 45: /* conditional: IDENTIFIER MAJOR NUMBER  */
-#line 264 "translator.y"
+#line 260 "translator.y"
                               { 
-        asprintf(&(yyval.str), "%s > %s", (yyvsp[-2].str), (yyvsp[0].str)); 
+        asprintf(&(yyval.str), "%s > %s",(yyvsp[-2].str),(yyvsp[0].str)); 
     }
-#line 1650 "translator.tab.c"
+#line 1646 "translator.tab.c"
     break;
 
   case 46: /* $@3: %empty  */
-#line 270 "translator.y"
+#line 266 "translator.y"
                                              {
         print_indent();
-        printf("for _ in range(%s):\n", (yyvsp[-1].str));
+        printf("for _ in range(%s):\n",(yyvsp[-1].str));
         indent_level++;
     }
-#line 1660 "translator.tab.c"
+#line 1656 "translator.tab.c"
     break;
 
   case 47: /* perform_statement: PERFORM optional_number_identifier TIMES $@3 statements ENDPERFORM optional_point  */
-#line 275 "translator.y"
+#line 271 "translator.y"
                                          {
         indent_level--;
     }
-#line 1668 "translator.tab.c"
+#line 1664 "translator.tab.c"
     break;
 
   case 48: /* $@4: %empty  */
-#line 278 "translator.y"
+#line 274 "translator.y"
                                 {
         print_indent();
-        printf("while not %s:\n", (yyvsp[0].str));
+        printf("while not %s:\n",(yyvsp[0].str));
         indent_level++;
         free((yyvsp[0].str));
     }
-#line 1679 "translator.tab.c"
+#line 1675 "translator.tab.c"
     break;
 
   case 49: /* perform_statement: PERFORM UNTIL conditional $@4 statements ENDPERFORM optional_point  */
-#line 284 "translator.y"
+#line 280 "translator.y"
                                          {
         indent_level--;
     }
-#line 1687 "translator.tab.c"
+#line 1683 "translator.tab.c"
     break;
 
   case 52: /* optional_number_identifier: NUMBER  */
-#line 295 "translator.y"
-           { (yyval.str) = (yyvsp[0].str); }
-#line 1693 "translator.tab.c"
+#line 291 "translator.y"
+           { (yyval.str)=(yyvsp[0].str); }
+#line 1689 "translator.tab.c"
     break;
 
   case 53: /* optional_number_identifier: IDENTIFIER  */
-#line 296 "translator.y"
-                 { (yyval.str) = (yyvsp[0].str); }
-#line 1699 "translator.tab.c"
+#line 292 "translator.y"
+                 { (yyval.str)=(yyvsp[0].str); }
+#line 1695 "translator.tab.c"
     break;
 
   case 54: /* pic_type: NUMBER '(' NUMBER ')'  */
-#line 299 "translator.y"
+#line 295 "translator.y"
                           {
-        (yyval.picinfo).type = strdup("int");
-        (yyval.picinfo).length = strdup((yyvsp[-1].str));
+        (yyval.picinfo).type=strdup("int");
+        (yyval.picinfo).length=strdup((yyvsp[-1].str));
     }
-#line 1708 "translator.tab.c"
+#line 1704 "translator.tab.c"
     break;
 
   case 55: /* pic_type: NUMBER '(' NUMBER ')' DIGIT_V9 '(' NUMBER ')'  */
-#line 303 "translator.y"
+#line 299 "translator.y"
                                                     {
-        (yyval.picinfo).type = strdup("float");
-        (yyval.picinfo).length = strdup((yyvsp[-5].str));
+        (yyval.picinfo).type=strdup("float");
+        (yyval.picinfo).length=strdup((yyvsp[-5].str));
     }
-#line 1717 "translator.tab.c"
+#line 1713 "translator.tab.c"
     break;
 
   case 56: /* pic_type: 'X' '(' NUMBER ')'  */
-#line 307 "translator.y"
+#line 303 "translator.y"
                          {
-        (yyval.picinfo).type = strdup("str");
-        (yyval.picinfo).length = strdup((yyvsp[-1].str));
+        (yyval.picinfo).type=strdup("str");
+        (yyval.picinfo).length=strdup((yyvsp[-1].str));
     }
-#line 1726 "translator.tab.c"
+#line 1722 "translator.tab.c"
     break;
 
   case 57: /* pic_type: 'A' '(' NUMBER ')'  */
-#line 311 "translator.y"
+#line 307 "translator.y"
                          {
-        (yyval.picinfo).type = strdup("str");
-        (yyval.picinfo).length = strdup((yyvsp[-1].str));
+        (yyval.picinfo).type=strdup("str");
+        (yyval.picinfo).length=strdup((yyvsp[-1].str));
     }
-#line 1735 "translator.tab.c"
+#line 1731 "translator.tab.c"
     break;
 
   case 58: /* pic_type: DIGIT_S9 '(' NUMBER ')'  */
-#line 315 "translator.y"
+#line 311 "translator.y"
                               {
-        (yyval.picinfo).type = strdup("int");
-        (yyval.picinfo).length = strdup((yyvsp[-1].str));
+        (yyval.picinfo).type=strdup("int");
+        (yyval.picinfo).length=strdup((yyvsp[-1].str));
     }
-#line 1744 "translator.tab.c"
+#line 1740 "translator.tab.c"
     break;
 
   case 59: /* pic_type: DIGIT_S9 '(' NUMBER ')' DIGIT_V9 '(' NUMBER ')'  */
-#line 319 "translator.y"
+#line 315 "translator.y"
                                                       {
-        (yyval.picinfo).type = strdup("float");
-        (yyval.picinfo).length = strdup((yyvsp[-5].str));
+        (yyval.picinfo).type=strdup("float");
+        (yyval.picinfo).length=strdup((yyvsp[-5].str));
     }
-#line 1753 "translator.tab.c"
+#line 1749 "translator.tab.c"
     break;
 
   case 60: /* maybe_value: %empty  */
-#line 326 "translator.y"
-                 { (yyval.str) = NULL; }
-#line 1759 "translator.tab.c"
+#line 322 "translator.y"
+          { (yyval.str)=NULL; }
+#line 1755 "translator.tab.c"
     break;
 
   case 61: /* maybe_value: VALUE STRING  */
-#line 327 "translator.y"
+#line 323 "translator.y"
                    {
-        char* buf = malloc(strlen((yyvsp[0].str)) + 10);
-        sprintf(buf, " = \"%s\"", (yyvsp[0].str));
-        (yyval.str) = buf;
+        char* buf=malloc(strlen((yyvsp[0].str))+10);
+        sprintf(buf," = \"%s\"",(yyvsp[0].str));
+        (yyval.str)=buf;
     }
-#line 1769 "translator.tab.c"
+#line 1765 "translator.tab.c"
     break;
 
   case 62: /* maybe_value: VALUE NUMBER  */
-#line 332 "translator.y"
+#line 328 "translator.y"
                    {
-        char* buf = malloc(strlen((yyvsp[0].str)) + 10);
-        sprintf(buf, " = %s", (yyvsp[0].str));
-        (yyval.str) = buf;
+        char* buf=malloc(strlen((yyvsp[0].str))+10);
+        sprintf(buf," = %s",(yyvsp[0].str));
+        (yyval.str)=buf;
     }
-#line 1779 "translator.tab.c"
+#line 1775 "translator.tab.c"
     break;
 
   case 68: /* newline_only: '\n'  */
-#line 351 "translator.y"
+#line 347 "translator.y"
          {
         printf("\n");
     }
-#line 1787 "translator.tab.c"
+#line 1783 "translator.tab.c"
     break;
 
 
-#line 1791 "translator.tab.c"
+#line 1787 "translator.tab.c"
 
       default: break;
     }
@@ -1980,30 +1976,26 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 355 "translator.y"
+#line 351 "translator.y"
 
 
-int main(int argc, char *argv[]) {
-    if (argc != 3) {
-        fprintf(stderr, "Uso: %s archivo_entrada.cob archivo_salida.py\n", argv[0]);
+int main(int argc, char *argv[]){
+    if(argc!=3){
+        fprintf(stderr,"Uso: %s archivo_entrada.cob archivo_salida.py\n",argv[0]);
         return 1;
     }
-
-    if (freopen(argv[1], "r", stdin) == NULL) {
+    if(freopen(argv[1],"r",stdin)==NULL){
         perror("No se pudo abrir el archivo de entrada");
         return 1;
     }
-
-    if (freopen(argv[2], "w", stdout) == NULL) {
+    if(freopen(argv[2],"w",stdout)==NULL){
         perror("No se pudo abrir el archivo de salida");
         return 1;
     }
-
     yyparse();
-
     return 0;
 }
 
-void yyerror(const char *s) {
-    fprintf(stderr, "Error: %s\n", s);
+void yyerror(const char *s){
+    fprintf(stderr,"Error: %s\n",s);
 }

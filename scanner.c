@@ -127,7 +127,7 @@ int yylex() {
         char buffer[256];
         int i=0;
         while((c=getchar())!='"' && c!=EOF){
-            buffer[i++] = c;
+            buffer[i++]=c;
         }
         buffer[i]='\0';
         yylval.str=strdup(buffer); 

@@ -111,10 +111,10 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 44 "translator.y"
+#line 43 "translator.y"
 
     char* str;
-    struct {
+    struct{
         char* type;
         char* length;
     } picinfo;

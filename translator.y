@@ -7,11 +7,10 @@
 
 int yylex(void);
 void yyerror(const char *s);
+int indent_level=0;
 
-int indent_level = 0;
-
-void print_indent() {
-    for (int i = 0; i < indent_level; i++)
+void print_indent(){
+    for(int i=0;i<indent_level;i++)
         printf("    ");
 }
 
@@ -22,17 +21,17 @@ typedef struct {
 
 #define MAX_VARIABLES 100
 Variable variables[MAX_VARIABLES];
-int variable_count = 0;
+int variable_count=0;
 
-void add_variable(const char* name, const char* type) {
-    variables[variable_count].name = strdup(name);
-    variables[variable_count].type = strdup(type);
+void add_variable(const char* name, const char* type){
+    variables[variable_count].name=strdup(name);
+    variables[variable_count].type=strdup(type);
     variable_count++;
 }
 
-const char* get_variable_type(const char* name) {
-    for (int i = 0; i < variable_count; i++) {
-        if (strcmp(variables[i].name, name) == 0) {
+const char* get_variable_type(const char* name){
+    for (int i=0;i<variable_count;i++){
+        if(strcmp(variables[i].name,name)==0){
             return variables[i].type;
         }
     }
@@ -41,9 +40,9 @@ const char* get_variable_type(const char* name) {
 
 %}
 
-%union {
+%union{
     char* str;
-    struct {
+    struct{
         char* type;
         char* length;
     } picinfo;
@@ -81,95 +80,95 @@ const char* get_variable_type(const char* name) {
 %%
 
 program:
-    /* vacío */
+    /* */
   | program statement_with_newline
 ;   
 
 statement:
     DISPLAY STRING optional_point {
         print_indent();
-        printf("print(\"%s\")\n", $2);
+        printf("print(\"%s\")\n",$2);
     }
     | DISPLAY IDENTIFIER optional_point {
         print_indent();
-        printf("print(%s)\n", $2);
+        printf("print(%s)\n",$2);
     }
     | ACCEPT IDENTIFIER optional_point {
-        const char* tipo = get_variable_type($2);
+        const char* tipo=get_variable_type($2);
         print_indent();
-        if (tipo == NULL) {
-            printf("%s = input()  # tipo desconocido\n", $2);
+        if(tipo==NULL) {
+            printf("%s = input()  # tipo desconocido\n",$2);
         } 
-        else if (strcmp(tipo, "int") == 0) {
-            printf("%s = int(input())\n", $2);
+        else if(strcmp(tipo,"int")==0) {
+            printf("%s = int(input())\n",$2);
         } 
-        else if (strcmp(tipo, "float") == 0) {
-            printf("%s = float(input())\n", $2);
+        else if(strcmp(tipo,"float")==0) {
+            printf("%s = float(input())\n",$2);
         } 
-        else if (strcmp(tipo, "str") == 0) {
-            printf("%s = str(input())\n", $2); 
+        else if(strcmp(tipo, "str")==0) {
+            printf("%s = str(input())\n",$2); 
         } 
-        else {
-            printf("%s = input()  # tipo de dato no manejado: %s\n", $2, tipo);
+        else{
+            printf("%s=input()  # tipo de dato no manejado: %s\n",$2,tipo);
         }
     }
     | MOVE STRING TO IDENTIFIER optional_point {
         print_indent();
-        printf("%s = \"%s\"\n", $4, $2);
+        printf("%s = \"%s\"\n",$4,$2);
     }
     | MOVE NUMBER TO IDENTIFIER optional_point {
         print_indent();
-        printf("%s = %s\n", $4, $2);
+        printf("%s = %s\n",$4,$2);
     }
     | MOVE IDENTIFIER TO IDENTIFIER optional_point {
         print_indent();
-        printf("%s = %s\n", $4, $2);
+        printf("%s = %s\n",$4,$2);
     }
     | ADD optional_number_identifier TO IDENTIFIER optional_point {
         print_indent();
-        printf("%s += %s\n", $4, $2);
+        printf("%s += %s\n",$4,$2);
     }
     | ADD optional_number_identifier TO optional_number_identifier GIVING IDENTIFIER optional_point {
         print_indent();
-        printf("%s = %s + %s\n", $6, $4, $2);
+        printf("%s = %s + %s\n",$6,$4,$2);
     }
     | SUBTRACT optional_number_identifier FROM IDENTIFIER optional_point {
         print_indent();
-        printf("%s -= %s\n", $4, $2);
+        printf("%s -= %s\n",$4,$2);
     }
     | SUBTRACT optional_number_identifier FROM optional_number_identifier GIVING IDENTIFIER optional_point {
         print_indent();
-        printf("%s = %s - %s\n", $6, $4, $2);
+        printf("%s = %s - %s\n",$6,$4,$2);
     }
     | MULTIPLY optional_number_identifier BY IDENTIFIER {
         print_indent();
-        printf("%s *= %s\n", $4, $2);
+        printf("%s *= %s\n",$4,$2);
     }
     | MULTIPLY optional_number_identifier BY optional_number_identifier GIVING IDENTIFIER optional_point {
         print_indent();
-        printf("%s = %s * %s\n", $6, $4, $2);
+        printf("%s = %s * %s\n",$6,$4,$2);
     }
     | DIVIDE optional_number_identifier INTO IDENTIFIER {
         print_indent();
-        printf("%s /= %s\n", $4, $2);
+        printf("%s /= %s\n",$4,$2);
     }
     | DIVIDE optional_number_identifier INTO optional_number_identifier GIVING IDENTIFIER optional_point {
         print_indent();
-        printf("%s = %s / %s\n", $6, $4, $2);
+        printf("%s = %s / %s\n",$6,$4,$2);
     }
     | DIVIDE IDENTIFIER BY optional_number_identifier {
         print_indent();
-        printf("%s /= %s\n", $2, $4);
+        printf("%s /= %s\n",$2,$4);
     }
     | IDENTIFICATION DIVISION '.' {
         print_indent();
         printf("# IDENTIFICATION DIVISION\n");
     }
     | PROGRAMID '.' IDENTIFIER '.' {
-        printf("# PROGRAM-ID: %s\n", $3);
+        printf("# PROGRAM-ID: %s\n",$3);
     }
     | PROGRAMID '.' NUMBER IDENTIFIER '.' {
-        printf("# PROGRAM-ID: %s%s\n", $3, $4);
+        printf("# PROGRAM-ID: %s%s\n",$3,$4);
     }
     | ENVIRONMENT DIVISION '.' {
         printf("# ENVIRONMENT DIVISION\n");
@@ -196,11 +195,11 @@ statement:
         printf("# STOP RUN\n");
     }
     | NUMBER IDENTIFIER '.' {
-        printf("# NIVEL %s DE VARIABLES %s\n", $1, $2);
+        printf("# NIVEL %s DE VARIABLES %s\n",$1,$2);
     }
     | NUMBER IDENTIFIER PIC pic_type maybe_value '.' {
-        add_variable($2, $4.type);
-        if($5 == NULL){
+        add_variable($2,$4.type);
+        if($5==NULL){
             printf("# var %s: %s%s%s\n", 
             $2,                 
             $4.type,            
@@ -209,10 +208,7 @@ statement:
             );
         }
         else{
-            printf("%s%s\n", 
-                $2,                 
-                $5 != NULL ? $5 : ""
-            );
+            printf("%s%s\n",$2,$5 != NULL ? $5 : "");
         }
     }
     | if_statement
@@ -222,7 +218,7 @@ statement:
 if_statement:
     IF conditional NEWLINE {
         print_indent();
-        printf("if (%s):\n", $2);
+        printf("if (%s):\n",$2);
         indent_level++;
         free($2);  
     }
@@ -232,7 +228,7 @@ if_statement:
 ;
 
 optional_else:
-      /* vacío */
+    /* */
     | ELSE NEWLINE {
         indent_level--; 
         print_indent();
@@ -244,32 +240,32 @@ optional_else:
 
 conditional:
     IDENTIFIER EQUALS IDENTIFIER { 
-        asprintf(&$$, "%s == %s", $1, $3); 
+        asprintf(&$$, "%s == %s",$1,$3); 
     }
     | IDENTIFIER EQUALS NUMBER { 
-        asprintf(&$$, "%s == %s", $1, $3); 
+        asprintf(&$$, "%s == %s",$1,$3); 
     }
     | IDENTIFIER EQUALS STRING { 
-        asprintf(&$$, "%s == \"%s\"", $1, $3); 
+        asprintf(&$$, "%s == \"%s\"",$1,$3); 
     }
     | IDENTIFIER MINOR IDENTIFIER { 
-        asprintf(&$$, "%s < %s", $1, $3); 
+        asprintf(&$$, "%s < %s",$1,$3); 
     }
     | IDENTIFIER MINOR NUMBER { 
-        asprintf(&$$, "%s < %s", $1, $3); 
+        asprintf(&$$, "%s < %s",$1,$3); 
     }
     | IDENTIFIER MAJOR IDENTIFIER { 
-        asprintf(&$$, "%s > %s", $1, $3); 
+        asprintf(&$$, "%s > %s",$1,$3); 
     }
     | IDENTIFIER MAJOR NUMBER { 
-        asprintf(&$$, "%s > %s", $1, $3); 
+        asprintf(&$$, "%s > %s",$1,$3); 
     }
 ;
 
 perform_statement:
     PERFORM optional_number_identifier TIMES {
         print_indent();
-        printf("for _ in range(%s):\n", $2);
+        printf("for _ in range(%s):\n",$2);
         indent_level++;
     }
     statements ENDPERFORM optional_point {
@@ -277,7 +273,7 @@ perform_statement:
     }
     | PERFORM UNTIL conditional {
         print_indent();
-        printf("while not %s:\n", $3);
+        printf("while not %s:\n",$3);
         indent_level++;
         free($3);
     }
@@ -288,51 +284,51 @@ perform_statement:
 ;
 
 optional_point:
-    /* vacio */
+    /* */
     | '.';
 
 optional_number_identifier:
-    NUMBER { $$ = $1; }
-    | IDENTIFIER { $$ = $1; };
+    NUMBER { $$=$1; }
+    | IDENTIFIER { $$=$1; };
 
 pic_type:
     NUMBER '(' NUMBER ')' {
-        $$.type = strdup("int");
-        $$.length = strdup($3);
+        $$.type=strdup("int");
+        $$.length=strdup($3);
     }
     | NUMBER '(' NUMBER ')' DIGIT_V9 '(' NUMBER ')' {
-        $$.type = strdup("float");
-        $$.length = strdup($3);
+        $$.type=strdup("float");
+        $$.length=strdup($3);
     }
     | 'X' '(' NUMBER ')' {
-        $$.type = strdup("str");
-        $$.length = strdup($3);
+        $$.type=strdup("str");
+        $$.length=strdup($3);
     }
     | 'A' '(' NUMBER ')' {
-        $$.type = strdup("str");
-        $$.length = strdup($3);
+        $$.type=strdup("str");
+        $$.length=strdup($3);
     }
     | DIGIT_S9 '(' NUMBER ')' {
-        $$.type = strdup("int");
-        $$.length = strdup($3);
+        $$.type=strdup("int");
+        $$.length=strdup($3);
     }
     | DIGIT_S9 '(' NUMBER ')' DIGIT_V9 '(' NUMBER ')' {
-        $$.type = strdup("float");
-        $$.length = strdup($3);
+        $$.type=strdup("float");
+        $$.length=strdup($3);
     }
 ;
 
 maybe_value:
-    /* vacío */ { $$ = NULL; }
+    /* */ { $$=NULL; }
     | VALUE STRING {
-        char* buf = malloc(strlen($2) + 10);
-        sprintf(buf, " = \"%s\"", $2);
-        $$ = buf;
+        char* buf=malloc(strlen($2)+10);
+        sprintf(buf," = \"%s\"",$2);
+        $$=buf;
     }
     | VALUE NUMBER {
-        char* buf = malloc(strlen($2) + 10);
-        sprintf(buf, " = %s", $2);
-        $$ = buf;
+        char* buf=malloc(strlen($2)+10);
+        sprintf(buf," = %s",$2);
+        $$=buf;
     }
 ;
 
@@ -354,27 +350,23 @@ newline_only:
 
 %%
 
-int main(int argc, char *argv[]) {
-    if (argc != 3) {
-        fprintf(stderr, "Uso: %s archivo_entrada.cob archivo_salida.py\n", argv[0]);
+int main(int argc, char *argv[]){
+    if(argc!=3){
+        fprintf(stderr,"Uso: %s archivo_entrada.cob archivo_salida.py\n",argv[0]);
         return 1;
     }
-
-    if (freopen(argv[1], "r", stdin) == NULL) {
+    if(freopen(argv[1],"r",stdin)==NULL){
         perror("No se pudo abrir el archivo de entrada");
         return 1;
     }
-
-    if (freopen(argv[2], "w", stdout) == NULL) {
+    if(freopen(argv[2],"w",stdout)==NULL){
         perror("No se pudo abrir el archivo de salida");
         return 1;
     }
-
     yyparse();
-
     return 0;
 }
 
-void yyerror(const char *s) {
-    fprintf(stderr, "Error: %s\n", s);
+void yyerror(const char *s){
+    fprintf(stderr,"Error: %s\n",s);
 }
