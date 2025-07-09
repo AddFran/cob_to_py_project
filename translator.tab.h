@@ -101,7 +101,8 @@ extern int yydebug;
     DIGIT_V9 = 302,                /* DIGIT_V9  */
     PERFORM = 303,                 /* PERFORM  */
     ENDPERFORM = 304,              /* ENDPERFORM  */
-    TIMES = 305                    /* TIMES  */
+    TIMES = 305,                   /* TIMES  */
+    UNTIL = 306                    /* UNTIL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -118,7 +119,7 @@ union YYSTYPE
         char* length;
     } picinfo;
 
-#line 122 "translator.tab.h"
+#line 123 "translator.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

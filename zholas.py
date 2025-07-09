@@ -43,4 +43,14 @@ for _ in range(10):
 for _ in range(NUM):
     print(NUM)
     print("THIS IS A NUMERO")
+while not NUM2 < 12:
+    print(NUM2)
+    print("MENSAHE SKAJDÑA")
+    if (NUM2 == 14):
+        print("SHUADH")
+        print(NUM2)
+        for _ in range(NUM2):
+            print(NUM)
+            print("SDADSA")
+            NUM2 = int(input())
 # STOP RUN

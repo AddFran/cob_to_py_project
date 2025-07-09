@@ -53,6 +53,19 @@
            PERFORM NUM TIMES
                DISPLAY NUM
                DISPLAY "THIS IS A NUMERO"
-           END-PERFORM.
+           END-PERFORM
 
+           PERFORM UNTIL NUM2 < 12
+               DISPLAY NUM2
+               DISPLAY "MENSAHE SKAJDÑA" 
+               IF NUM2 = 14
+                   DISPLAY "SHUADH"
+                   DISPLAY NUM2
+                   PERFORM NUM2 TIMES
+                       DISPLAY NUM
+                       DISPLAY "SDADSA"
+                       ACCEPT NUM2
+                   END-PERFORM.
+               END-IF.
+           END-PERFORM. 
        STOP RUN.

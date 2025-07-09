@@ -1,4 +1,5 @@
 %{
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +14,6 @@ void print_indent() {
     for (int i = 0; i < indent_level; i++)
         printf("    ");
 }
-
 
 typedef struct {
     char* name;
@@ -68,13 +68,14 @@ const char* get_variable_type(const char* name) {
 %token PIC VALUE
 %token DIGIT_X DIGIT_9 DIGIT_A DIGIT_S DIGIT_S9 DIGIT_V9
 %token PERFORM ENDPERFORM
-%token TIMES
+%token TIMES UNTIL
 
 
 %type statement
 %type <str> optional_number_identifier
 %type <picinfo> pic_type
 %type <str> maybe_value
+%type <str> conditional
 %start program
 
 %%
@@ -219,60 +220,11 @@ statement:
 ;
 
 if_statement:
-    IF IDENTIFIER EQUALS STRING NEWLINE {
+    IF conditional NEWLINE {
         print_indent();
-        printf("if (%s == \"%s\"):\n", $2, $4);
+        printf("if (%s):\n", $2);
         indent_level++;
-    }
-    statements optional_else ENDIF optional_point {
-        indent_level--;
-    }
-
-    | IF IDENTIFIER EQUALS IDENTIFIER NEWLINE {
-        print_indent();
-        printf("if (%s == %s):\n", $2, $4);
-        indent_level++;
-    }
-    statements optional_else ENDIF optional_point {
-        indent_level--;
-    }
-
-    | IF IDENTIFIER EQUALS NUMBER NEWLINE {
-        print_indent();
-        printf("if (%s == %s):\n", $2, $4);
-        indent_level++;
-    }
-    statements optional_else ENDIF optional_point {
-        indent_level--;
-    }
-    | IF IDENTIFIER MINOR IDENTIFIER NEWLINE {
-        print_indent();
-        printf("if (%s < %s):\n", $2, $4);
-        indent_level++;
-    }
-    statements optional_else ENDIF optional_point {
-        indent_level--;
-    }
-    | IF IDENTIFIER MINOR NUMBER NEWLINE {
-        print_indent();
-        printf("if (%s < %s):\n", $2, $4);
-        indent_level++;
-    }
-    statements optional_else ENDIF optional_point {
-        indent_level--;
-    }
-    | IF IDENTIFIER MAJOR IDENTIFIER NEWLINE {
-        print_indent();
-        printf("if (%s > %s):\n", $2, $4);
-        indent_level++;
-    }
-    statements optional_else ENDIF optional_point {
-        indent_level--;
-    }
-    | IF IDENTIFIER MAJOR NUMBER NEWLINE {
-        print_indent();
-        printf("if (%s > %s):\n", $2, $4);
-        indent_level++;
+        free($2);  
     }
     statements optional_else ENDIF optional_point {
         indent_level--;
@@ -290,6 +242,30 @@ optional_else:
     statements
 ;
 
+conditional:
+    IDENTIFIER EQUALS IDENTIFIER { 
+        asprintf(&$$, "%s == %s", $1, $3); 
+    }
+    | IDENTIFIER EQUALS NUMBER { 
+        asprintf(&$$, "%s == %s", $1, $3); 
+    }
+    | IDENTIFIER EQUALS STRING { 
+        asprintf(&$$, "%s == \"%s\"", $1, $3); 
+    }
+    | IDENTIFIER MINOR IDENTIFIER { 
+        asprintf(&$$, "%s < %s", $1, $3); 
+    }
+    | IDENTIFIER MINOR NUMBER { 
+        asprintf(&$$, "%s < %s", $1, $3); 
+    }
+    | IDENTIFIER MAJOR IDENTIFIER { 
+        asprintf(&$$, "%s > %s", $1, $3); 
+    }
+    | IDENTIFIER MAJOR NUMBER { 
+        asprintf(&$$, "%s > %s", $1, $3); 
+    }
+;
+
 perform_statement:
     PERFORM optional_number_identifier TIMES {
         print_indent();
@@ -299,6 +275,16 @@ perform_statement:
     statements ENDPERFORM optional_point {
         indent_level--;
     }
+    | PERFORM UNTIL conditional {
+        print_indent();
+        printf("while not %s:\n", $3);
+        indent_level++;
+        free($3);
+    }
+    statements ENDPERFORM optional_point {
+        indent_level--;
+    }
+
 ;
 
 optional_point:

@@ -114,6 +114,8 @@ int yylex() {
             return ENDPERFORM;
         else if(strcmp(buffer,"TIMES")==0)
             return TIMES;
+        else if(strcmp(buffer,"UNTIL")==0)
+            return UNTIL;
 
         else{
             yylval.str = strdup(buffer); 
