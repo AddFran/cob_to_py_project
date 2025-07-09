@@ -26,9 +26,9 @@ int yylex() {
     if(isalnum(c)){
         char buffer[64];
         int i=0;
-        buffer[i++]=c;
+        buffer[i++]=toupper(c);
         while(isalnum(c=getchar()) || c=='-' || c=='_'){
-            buffer[i++]=c;
+            buffer[i++]=toupper(c);
         }
         buffer[i]='\0';
         ungetc(c,stdin);
@@ -108,7 +108,12 @@ int yylex() {
         else if(strcmp(buffer,"PROCEDURE")==0)
             return PROCEDURE;
 
-        
+        else if(strcmp(buffer,"PERFORM")==0)
+            return PERFORM;
+        else if(strcmp(buffer,"END-PERFORM")==0)
+            return ENDPERFORM;
+        else if(strcmp(buffer,"TIMES")==0)
+            return TIMES;
 
         else{
             yylval.str = strdup(buffer); 

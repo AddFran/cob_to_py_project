@@ -17,12 +17,13 @@
        LINKAGE SECTION.
 
        PROCEDURE DIVISION.
-           DISPLAY NUM2.
-           DISPLAY "Ingrese su nombre: ".
+           DISPLay NUM2.
+           display "Ingrese su nombre: ".
            ACCEPT NOMBRE.
            DISPLAY "Ingrese su apellido: ".
            ACCEPT APELLIDO.
            ADD NUM2 TO 24 GIVING NUM.
+           ADD NUM2 TO NUM
            IF NOMBRE = "ADRIANO"
                DISPLAY "YO TE CONOZCO"
                IF NOMBRE = "ADRIANO"
@@ -33,5 +34,25 @@
            ELSE
                DISPLAY "QUIEN ERES"
            END-IF.
+           IF NOMBRE = "FRAN"
+               DISPLAY "KAJSLDKA"
+               DISPLAY "KSAJLDAJKSLDJAL" 
+           END-IF.
            DISPLAY "JALOU"
+
+           PERFORM 10 TIMES
+               DISPLAY "HOLA MUNDO"
+               DISPLAY "JSJSJSJSJ"
+               PERFORM 5 TIMES
+                   ADD 12 TO NUM2 GIVING NUM
+                   DISPLAY "OSJADODSJAO"
+                   DISPLAY NUM2
+               END-PERFORM.
+           END-PERFORM. 
+
+           PERFORM NUM TIMES
+               DISPLAY NUM
+               DISPLAY "THIS IS A NUMERO"
+           END-PERFORM.
+
        STOP RUN.

@@ -8,8 +8,8 @@
 # var NOMBRE: str30
 # var APELLIDO: str30
 # var NUM: int10
-NUM2  = 12
-CHAR  = "habla caus"
+NUM2 = 12
+CHAR = "habla caus"
 # LOCAL-STORAGE SECTION
 # var APELLIDO-USUARIO: str30
 # LINKAGE SECTION
@@ -20,6 +20,7 @@ NOMBRE = str(input())
 print("Ingrese su apellido: ")
 APELLIDO = str(input())
 NUM = 24 + NUM2
+NUM += NUM2
 if (NOMBRE == "ADRIANO"):
     print("YO TE CONOZCO")
     if (NOMBRE == "ADRIANO"):
@@ -28,5 +29,18 @@ if (NOMBRE == "ADRIANO"):
         print("GLAKLSFKDLASKDLAK")
 else:
     print("QUIEN ERES")
+if (NOMBRE == "FRAN"):
+    print("KAJSLDKA")
+    print("KSAJLDAJKSLDJAL")
 print("JALOU")
+for _ in range(10):
+    print("HOLA MUNDO")
+    print("JSJSJSJSJ")
+    for _ in range(5):
+        NUM = NUM2 + 12
+        print("OSJADODSJAO")
+        print(NUM2)
+for _ in range(NUM):
+    print(NUM)
+    print("THIS IS A NUMERO")
 # STOP RUN

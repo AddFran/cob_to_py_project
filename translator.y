@@ -67,6 +67,8 @@ const char* get_variable_type(const char* name) {
 %token NEWLINE
 %token PIC VALUE
 %token DIGIT_X DIGIT_9 DIGIT_A DIGIT_S DIGIT_S9 DIGIT_V9
+%token PERFORM ENDPERFORM
+%token TIMES
 
 
 %type statement
@@ -206,13 +208,14 @@ statement:
             );
         }
         else{
-            printf("%s %s\n", 
+            printf("%s%s\n", 
                 $2,                 
                 $5 != NULL ? $5 : ""
             );
         }
     }
     | if_statement
+    | perform_statement
 ;
 
 if_statement:
@@ -285,6 +288,17 @@ optional_else:
         indent_level++; 
     }
     statements
+;
+
+perform_statement:
+    PERFORM optional_number_identifier TIMES {
+        print_indent();
+        printf("for _ in range(%s):\n", $2);
+        indent_level++;
+    }
+    statements ENDPERFORM optional_point {
+        indent_level--;
+    }
 ;
 
 optional_point:
