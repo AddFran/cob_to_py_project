@@ -7,12 +7,18 @@
        FILE SECTION.
        WORKING-STORAGE SECTION.
        01 DATOS.
+           02 AGE PIC 9(2) VALUE 19.
            02 NOMBRE PIC A(30).
            02 APELLIDO PIC A(30).
-           02 NUM PIC 9(10).
-           02 NUM2 PIC 9(10) VALUE 12.
-           02 CHAR PIC A(10) VALUE "habla caus".
-           02 IDT PIC 9(10) VALUE 1.
+           02 NUMBER PIC S9(5) VALUE 20.
+           02 NUM1  PIC 9(10) VALUE 12.
+           02 NUM2  PIC 9(10) VALUE 14.
+           02 VARIABLE  PIC 9(10) VALUE 14.
+           02 NUMBER2 PIC 9(10)  VALUE 12.
+           02 CHAR PIC X(10)  VALUE "Hola mundo".
+           02 IDT  PIC S9(10) VALUE 1.
+           02 FACTOR1  PIC S9(10) VALUE 1.
+           02 FACTOR2  PIC S9(10) VALUE 1.
        LOCAL-STORAGE SECTION.
            77 APELLIDO-USUARIO PIC A(30).
        LINKAGE SECTION.
@@ -21,20 +27,50 @@
            DISPLay NUM2.
            display 'Ingrese su nombre: '.
            ACCEPT NOMBRE.
+           DISPLAY "Ingrese su edad: ".
+           ACCEPT AGE.
            DISPLAY "Ingrese su apellido: ".
            ACCEPT APELLIDO.
-           ADD NUM2 TO 24 GIVING NUM.
-           ADD NUM2 TO NUM
+
+           ADD 12 TO 12 GIVING AGE
+           ADD 12 TO NUMBER GIVING AGE
+           ADD NUMBER TO 12 GIVING AGE 
+           ADD NUMBER TO NUMBER2 GIVING AGE
+
+           SUBTRACT 5 FROM 10 GIVING RESULT
+           SUBTRACT NUMBER FROM 20 GIVING TOTAL
+           SUBTRACT 15 FROM VARIABLE GIVING DIFFERENCE
+           SUBTRACT NUM1 FROM NUM2 GIVING OUTPUT
+
+           MULTIPLY 2 BY 5 GIVING RESULT
+           MULTIPLY NUMBER BY 10 GIVING PRODUCT
+           MULTIPLY 4 BY VARIABLE GIVING OUTPUT
+           MULTIPLY FACTOR1 BY FACTOR2 GIVING RESULTADO
+
+           DIVIDE 2 INTO 10 GIVING RESULT
+           DIVIDE NUMBER INTO 100 GIVING QUOTIENT
+
+           MOVE 12 TO NUM2
+
            IF NOMBRE = "ADRIANO"
                DISPLAY "YO TE CONOZCO"
                IF NOMBRE = "ADRIANO"
                    DISPLAY "YO TE CONOZCO DE NUEVO"
+                   IF NUM1 = 30
+                       DISPLAY "INGENIERIA DE SISTEMAS"
+                       DISPLAY "COMPILADORES"
+                   END-IF
                ELSE
-                   DISPLAY "GLAKLSFKDLASKDLAK"
+                   DISPLAY "HOLA MUNDO"
+               END-IF
+               IF NUM1 = 12
+                   DISPLAY "NUM1 VALE 12"
+                   DISPLAY "NUM1 ES MAYOR A 10"
                END-IF
            ELSE
                DISPLAY "QUIEN ERES"
            END-IF.
+
            IF NOMBRE = "FRAN"
                DISPLAY "KAJSLDKA"
                DISPLAY "KSAJLDAJKSLDJAL" 
@@ -49,14 +85,15 @@
                    DISPLAY "SKAJDLSAKJDLAJLKSAJLD"          
                END-IF
            END-IF.
-           DISPLAY "JALOU"
+
+           DISPLAY "JELOU"
 
            PERFORM 10 TIMES
                DISPLAY "HOLA MUNDO"
-               DISPLAY "JSJSJSJSJ"
+               DISPLAY "HOLA MUNDO OTRA VEZ"
                PERFORM 5 TIMES
                    ADD 12 TO NUM2 GIVING NUM
-                   DISPLAY "OSJADODSJAO"
+                   DISPLAY "COMPILADORES"
                    DISPLAY NUM2
                END-PERFORM.
            END-PERFORM. 

@@ -5,12 +5,18 @@
 # FILE SECTION
 # WORKING-STORAGE SECTION
 # NIVEL 01 DE VARIABLES DATOS
+AGE = 19
 # var NOMBRE: str30
 # var APELLIDO: str30
-# var NUM: int10
-NUM2 = 12
-CHAR = "habla caus"
+NUMBER = 20
+NUM1 = 12
+NUM2 = 14
+VARIABLE = 14
+NUMBER2 = 12
+CHAR = "Hola mundo"
 IDT = 1
+FACTOR1 = 1
+FACTOR2 = 1
 # LOCAL-STORAGE SECTION
 # var APELLIDO-USUARIO: str30
 # LINKAGE SECTION
@@ -18,16 +24,37 @@ IDT = 1
 print(NUM2)
 print("Ingrese su nombre: ")
 NOMBRE = str(input())
+print("Ingrese su edad: ")
+AGE = int(input())
 print("Ingrese su apellido: ")
 APELLIDO = str(input())
-NUM = 24 + NUM2
-NUM += NUM2
+AGE = 12 + 12
+AGE = NUMBER + 12
+AGE = 12 + NUMBER
+AGE = NUMBER2 + NUMBER
+RESULT = 10 - 5
+TOTAL = 20 - NUMBER
+DIFFERENCE = VARIABLE - 15
+OUTPUT = NUM2 - NUM1
+RESULT = 5 * 2
+PRODUCT = 10 * NUMBER
+OUTPUT = VARIABLE * 4
+RESULTADO = FACTOR2 * FACTOR1
+RESULT = 10 / 2
+QUOTIENT = 100 / NUMBER
+NUM2 = 12
 if (NOMBRE == "ADRIANO"):
     print("YO TE CONOZCO")
     if (NOMBRE == "ADRIANO"):
         print("YO TE CONOZCO DE NUEVO")
+        if (NUM1 == 30):
+            print("INGENIERIA DE SISTEMAS")
+            print("COMPILADORES")
     else:
-        print("GLAKLSFKDLASKDLAK")
+        print("HOLA MUNDO")
+    if (NUM1 == 12):
+        print("NUM1 VALE 12")
+        print("NUM1 ES MAYOR A 10")
 else:
     print("QUIEN ERES")
 if (NOMBRE == "FRAN"):
@@ -41,13 +68,13 @@ if (NOMBRE == "FRAN"):
     else:
         print("KSAJLDSAJKL")
         print("SKAJDLSAKJDLAJLKSAJLD")
-print("JALOU")
+print("JELOU")
 for _ in range(10):
     print("HOLA MUNDO")
-    print("JSJSJSJSJ")
+    print("HOLA MUNDO OTRA VEZ")
     for _ in range(5):
         NUM = NUM2 + 12
-        print("OSJADODSJAO")
+        print("COMPILADORES")
         print(NUM2)
 for _ in range(NUM):
     print(NUM)
