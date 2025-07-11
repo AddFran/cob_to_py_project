@@ -1,5 +1,5 @@
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. 01HOLA_MUNDO.
+       PROGRAM-ID. PRUEBA-TRADUCCION.
 
        ENVIRONMENT DIVISION.
 
@@ -12,13 +12,14 @@
            02 NUM PIC 9(10).
            02 NUM2 PIC 9(10) VALUE 12.
            02 CHAR PIC A(10) VALUE "habla caus".
+           02 IDT PIC 9(10) VALUE 1.
        LOCAL-STORAGE SECTION.
            77 APELLIDO-USUARIO PIC A(30).
        LINKAGE SECTION.
 
        PROCEDURE DIVISION.
            DISPLay NUM2.
-           display "Ingrese su nombre: ".
+           display 'Ingrese su nombre: '.
            ACCEPT NOMBRE.
            DISPLAY "Ingrese su apellido: ".
            ACCEPT APELLIDO.
@@ -37,6 +38,16 @@
            IF NOMBRE = "FRAN"
                DISPLAY "KAJSLDKA"
                DISPLAY "KSAJLDAJKSLDJAL" 
+               IF NOMBRE = "KAJSDLKASJ"
+                   DISPLAY NOMBRE 
+               END-IF
+               IF NOMBRE = "SADASDA"
+                   DISPLAY "SALKDJSALDJKLASADAS"
+                   DISPLAY "SKLADJLSDKJALDJ"
+               ELSE
+                   DISPLAY "KSAJLDSAJKL"
+                   DISPLAY "SKAJDLSAKJDLAJLKSAJLD"          
+               END-IF
            END-IF.
            DISPLAY "JALOU"
 
@@ -68,4 +79,11 @@
                    END-PERFORM.
                END-IF.
            END-PERFORM. 
-       STOP RUN.
+
+           PERFORM VARYING IDT FROM 0 BY 1 UNTIL IDT > 9
+               DISPLAY "Valor de IDT: "
+               DISPLAY IDT
+           END-PERFORM. 
+
+           STOP RUN.
+       END PROGRAM PRUEBA-TRADUCCION.

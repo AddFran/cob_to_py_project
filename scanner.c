@@ -93,6 +93,10 @@ int yylex() {
             return IDENTIFICATION;
         else if(strcmp(buffer,"PROGRAM-ID")==0)
             return PROGRAMID;
+        else if(strcmp(buffer,"PROGRAM")==0)
+            return PROGRAM;
+        else if(strcmp(buffer,"END")==0)
+            return END;
         else if(strcmp(buffer,"ENVIRONMENT")==0)
             return ENVIRONMENT;
         else if(strcmp(buffer,"DATA")==0)
@@ -116,6 +120,8 @@ int yylex() {
             return TIMES;
         else if(strcmp(buffer,"UNTIL")==0)
             return UNTIL;
+        else if(strcmp(buffer,"VARYING")==0)
+            return VARYING;
 
         else{
             yylval.str = strdup(buffer); 
@@ -123,10 +129,11 @@ int yylex() {
         }
     }
 
-    else if(c=='"'){
+    else if(c=='"' || c=='\''){
+        char type=c;  
         char buffer[256];
         int i=0;
-        while((c=getchar())!='"' && c!=EOF){
+        while((c=getchar())!=type && c!=EOF){
             buffer[i++]=c;
         }
         buffer[i]='\0';

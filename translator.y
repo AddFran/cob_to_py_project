@@ -67,7 +67,7 @@ const char* get_variable_type(const char* name){
 %token PIC VALUE
 %token DIGIT_X DIGIT_9 DIGIT_A DIGIT_S DIGIT_S9 DIGIT_V9
 %token PERFORM ENDPERFORM
-%token TIMES UNTIL
+%token TIMES UNTIL VARYING 
 
 
 %type statement
@@ -169,6 +169,12 @@ statement:
     }
     | PROGRAMID '.' NUMBER IDENTIFIER '.' {
         printf("# PROGRAM-ID: %s%s\n",$3,$4);
+    }
+    | END PROGRAM IDENTIFIER '.' {
+        printf("# END PROGRAM %s", $3);
+    }
+    | END PROGRAM NUMBER IDENTIFIER '.' {
+        printf("# END PROGRAM %s%s", $3, $4);
     }
     | ENVIRONMENT DIVISION '.' {
         printf("# ENVIRONMENT DIVISION\n");
@@ -280,7 +286,18 @@ perform_statement:
     statements ENDPERFORM optional_point {
         indent_level--;
     }
-
+    | PERFORM VARYING IDENTIFIER FROM optional_number_identifier BY optional_number_identifier UNTIL conditional {
+        print_indent();
+        printf("%s = %s - 1\n", $3, $5);
+        printf("while not %s:\n", $9);
+        indent_level++;
+        print_indent();
+        printf("%s += %s\n", $3, $7);
+        free($3);
+    }
+    statements ENDPERFORM optional_point {
+        indent_level--;
+    }
 ;
 
 optional_point:
