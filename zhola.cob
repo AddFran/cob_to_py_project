@@ -7,18 +7,19 @@
        FILE SECTION.
        WORKING-STORAGE SECTION.
        01 DATOS.
-           02 AGE PIC 9(2) VALUE 19.
-           02 NOMBRE PIC A(30).
-           02 APELLIDO PIC A(30).
-           02 NUMBER PIC S9(5) VALUE 20.
-           02 NUM1  PIC 9(10) VALUE 12.
-           02 NUM2  PIC 9(10) VALUE 14.
+           02 AGE       PIC 9 VALUE 19.
+           02 NOMBRE    PIC A(30).
+           02 APELLIDO  PIC A(30).
+           02 NUMBER    PIC S9(5) VALUE 20.
+           02 NUM1      PIC 9(10) VALUE 12.
+           02 NUM2      PIC 9(10) VALUE 14.
            02 VARIABLE  PIC 9(10) VALUE 14.
-           02 NUMBER2 PIC 9(10)  VALUE 12.
-           02 CHAR PIC X(10)  VALUE "Hola mundo".
-           02 IDT  PIC S9(10) VALUE 1.
-           02 FACTOR1  PIC S9(10) VALUE 1.
-           02 FACTOR2  PIC S9(10) VALUE 1.
+           02 NUMBER2   PIC 9(10)  VALUE 12.
+           02 CHAR      PIC X(10)  VALUE "Hola mundo".
+           02 IDT       PIC S9(10) VALUE 1.
+           02 FACTOR1   PIC S9(10) VALUE 1.
+           02 FACTOR2   PIC S9(10) VALUE 1.
+           02 VARI-PR   PIC A(12) VALUE "SAD".
        LOCAL-STORAGE SECTION.
            77 APELLIDO-USUARIO PIC A(30).
        LINKAGE SECTION.
@@ -31,6 +32,7 @@
            ACCEPT AGE.
            DISPLAY "Ingrese su apellido: ".
            ACCEPT APELLIDO.
+           DISPLAY VARI-PR.
 
            ADD 12 TO 12 GIVING AGE
            ADD 12 TO NUMBER GIVING AGE

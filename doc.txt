@@ -13,9 +13,19 @@ scanner.py
 Lee continuamente caracteres, controlando los espacios y saltos de linea
 
 Tokens:
- - DISPLAY : Intruccion en COBOL
- - STRING  : Cadena contenida entre ""
- - \n      : Fin de linea
+ - DISPLAY: 
+   Instruccion en COBOL de salida (out)
+ - ACCEPT:
+   Instruccion en COBOL de entrada (in)
+ - STRING <str>: 
+   Cadena contenida entre ""
+ - IDENTIFIER <str>:
+   En caso de no validar ninguna cadena como TOKEN, lo validara como una variable
+ - NUMBER <str>:
+   Cadena de numeros, retorna el tipo 
+ - \n: 
+   Fin de linea
+ -  
 
 
 

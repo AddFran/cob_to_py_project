@@ -23,12 +23,15 @@ int yylex() {
         return NUMBER;
     }
 
-    if(isalnum(c)){
+    if(isalnum(c) || c=='_'){
         char buffer[64];
         int i=0;
         buffer[i++]=toupper(c);
         while(isalnum(c=getchar()) || c=='-' || c=='_'){
-            buffer[i++]=toupper(c);
+            if(c=='-')
+                buffer[i++]='_';
+            else
+                buffer[i++]=toupper(c);
         }
         buffer[i]='\0';
         ungetc(c,stdin);
@@ -57,7 +60,7 @@ int yylex() {
             return IF;
         else if(strcmp(buffer,"ELSE")==0)
             return ELSE;
-        else if(strcmp(buffer,"END-IF")==0)
+        else if(strcmp(buffer,"END_IF")==0)
             return ENDIF;
         else if(strcmp(buffer,"MOVE")==0)
             return MOVE;
@@ -91,7 +94,7 @@ int yylex() {
 
         else if(strcmp(buffer,"IDENTIFICATION")==0)
             return IDENTIFICATION;
-        else if(strcmp(buffer,"PROGRAM-ID")==0)
+        else if(strcmp(buffer,"PROGRAM_ID")==0)
             return PROGRAMID;
         else if(strcmp(buffer,"PROGRAM")==0)
             return PROGRAM;
@@ -103,9 +106,9 @@ int yylex() {
             return DATA;
         else if(strcmp(buffer,"FILE")==0)
             return FIL;
-        else if(strcmp(buffer,"WORKING-STORAGE")==0)
+        else if(strcmp(buffer,"WORKING_STORAGE")==0)
             return WORKINGSTORAGE;
-        else if(strcmp(buffer,"LOCAL-STORAGE")==0)
+        else if(strcmp(buffer,"LOCAL_STORAGE")==0)
             return LOCALSTORAGE;
         else if(strcmp(buffer,"LINKAGE")==0)
             return LINKAGE;
@@ -114,7 +117,7 @@ int yylex() {
 
         else if(strcmp(buffer,"PERFORM")==0)
             return PERFORM;
-        else if(strcmp(buffer,"END-PERFORM")==0)
+        else if(strcmp(buffer,"END_PERFORM")==0)
             return ENDPERFORM;
         else if(strcmp(buffer,"TIMES")==0)
             return TIMES;

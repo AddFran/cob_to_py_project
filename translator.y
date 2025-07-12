@@ -75,6 +75,7 @@ const char* get_variable_type(const char* name){
 %type <picinfo> pic_type
 %type <str> maybe_value
 %type <str> conditional
+%type <str> optional_long
 %start program
 
 %%
@@ -302,37 +303,44 @@ perform_statement:
 
 optional_point:
     /* */
-    | '.';
+    | '.'
+;
 
 optional_number_identifier:
     NUMBER { $$=$1; }
-    | IDENTIFIER { $$=$1; };
+    | IDENTIFIER { $$=$1; }
+;
 
 pic_type:
-    NUMBER '(' NUMBER ')' {
+    NUMBER optional_long {
         $$.type=strdup("int");
-        $$.length=strdup($3);
+        $$.length=strdup($2);
     }
-    | NUMBER '(' NUMBER ')' DIGIT_V9 '(' NUMBER ')' {
+    | NUMBER optional_long DIGIT_V9 '(' NUMBER ')' {
         $$.type=strdup("float");
-        $$.length=strdup($3);
+        $$.length=strdup($2);
     }
-    | 'X' '(' NUMBER ')' {
+    | 'X' optional_long {
         $$.type=strdup("str");
-        $$.length=strdup($3);
+        $$.length=strdup($2);
     }
-    | 'A' '(' NUMBER ')' {
+    | 'A' optional_long {
         $$.type=strdup("str");
-        $$.length=strdup($3);
+        $$.length=strdup($2);
     }
-    | DIGIT_S9 '(' NUMBER ')' {
+    | DIGIT_S9 optional_long {
         $$.type=strdup("int");
-        $$.length=strdup($3);
+        $$.length=strdup($2);
     }
-    | DIGIT_S9 '(' NUMBER ')' DIGIT_V9 '(' NUMBER ')' {
+    | DIGIT_S9 optional_long DIGIT_V9 '(' NUMBER ')' {
         $$.type=strdup("float");
-        $$.length=strdup($3);
+        $$.length=strdup($2);
     }
+;
+
+optional_long:
+    /* */ { $$=NULL; }
+    | '(' NUMBER ')' { $$=$2; }
 ;
 
 maybe_value:
