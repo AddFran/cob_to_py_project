@@ -125,6 +125,9 @@ int yylex() {
             return UNTIL;
         else if(strcmp(buffer,"VARYING")==0)
             return VARYING;
+        
+        else if(strcmp(buffer,"COMPUTE")==0)
+            return COMPUTE;
 
         else{
             yylval.str = strdup(buffer); 
@@ -151,6 +154,11 @@ int yylex() {
     else if(c=='>') return MAJOR;
     else if(c=='(') return '(';
     else if(c==')') return ')';
+
+    else if(c=='+') return '+';
+    else if(c=='-') return '-';
+    else if(c=='*') return '*';
+    else if(c=='/') return '/';
 
 
     return c;

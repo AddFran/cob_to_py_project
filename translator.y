@@ -67,7 +67,11 @@ const char* get_variable_type(const char* name){
 %token PIC VALUE
 %token DIGIT_X DIGIT_9 DIGIT_A DIGIT_S DIGIT_S9 DIGIT_V9
 %token PERFORM ENDPERFORM
-%token TIMES UNTIL VARYING 
+%token TIMES UNTIL VARYING
+
+%token COMPUTE
+%left '+' '-'
+%left '*' '/'
 
 
 %type statement
@@ -76,6 +80,11 @@ const char* get_variable_type(const char* name){
 %type <str> maybe_value
 %type <str> conditional
 %type <str> optional_long
+
+%type <str> exp 
+%type <str> tet 
+%type <str> fef 
+
 %start program
 
 %%
@@ -175,7 +184,7 @@ statement:
         printf("# END PROGRAM %s", $3);
     }
     | END PROGRAM NUMBER IDENTIFIER '.' {
-        printf("# END PROGRAM %s%s", $3, $4);
+        printf("# END PROGRAM %s%s", $3,$4);
     }
     | ENVIRONMENT DIVISION '.' {
         printf("# ENVIRONMENT DIVISION\n");
@@ -220,6 +229,56 @@ statement:
     }
     | if_statement
     | perform_statement
+    | compute_statement
+;
+
+compute_statement:
+    COMPUTE IDENTIFIER EQUALS exp optional_point {
+        print_indent();
+        printf("%s = %s\n",$2,$4); 
+        free($2);
+        free($4);
+    }
+;
+exp:
+    exp '+' tet {
+        asprintf(&$$,"(%s + %s)",$1,$3);
+        free($1); 
+        free($3);
+    }
+    | exp '-' tet {
+        asprintf(&$$, "(%s - %s)",$1,$3);
+        free($1); 
+        free($3);
+    }
+    | tet { $$=$1; }
+;
+tet:
+    tet '*' fef {
+        asprintf(&$$, "(%s * %s)",$1,$3);
+        free($1); 
+        free($3);
+    }
+    | tet '/' fef {
+        asprintf(&$$, "(%s / %s)",$1,$3);
+        free($1); 
+        free($3);
+    }
+    | fef { $$=$1; }
+;
+fef:
+    '(' exp ')' {
+        asprintf(&$$, "(%s)",$2);
+        free($2);
+    }
+    | IDENTIFIER {
+        $$=strdup($1);
+        free($1);
+    }
+    | NUMBER {
+        $$=strdup($1);
+        free($1);
+    }
 ;
 
 if_statement:
@@ -289,11 +348,11 @@ perform_statement:
     }
     | PERFORM VARYING IDENTIFIER FROM optional_number_identifier BY optional_number_identifier UNTIL conditional {
         print_indent();
-        printf("%s = %s - 1\n", $3, $5);
-        printf("while not %s:\n", $9);
+        printf("%s = %s - 1\n",$3,$5);
+        printf("while not %s:\n",$9);
         indent_level++;
         print_indent();
-        printf("%s += %s\n", $3, $7);
+        printf("%s += %s\n",$3,$7);
         free($3);
     }
     statements ENDPERFORM optional_point {
