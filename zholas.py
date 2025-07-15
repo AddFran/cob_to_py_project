@@ -47,26 +47,26 @@ RESULTADO = FACTOR2 * FACTOR1
 RESULT = 10 / 2
 QUOTIENT = 100 / NUMBER1
 NUM2 = 12
-if (NOMBRE == "ADRIANO"):
+if NOMBRE == "ADRIANO":
     print("YO TE CONOZCO")
-    if (NOMBRE == "ADRIANO"):
+    if NOMBRE == "ADRIANO":
         print("YO TE CONOZCO DE NUEVO")
-        if (NUM1 == 30):
+        if NUM1 == 30:
             print("INGENIERIA DE SISTEMAS")
             print("COMPILADORES")
     else:
         print("HOLA MUNDO")
-    if (NUM1 == 12):
+    if NUM1 == 12:
         print("NUM1 VALE 12")
         print("NUM1 ES MAYOR A 10")
 else:
     print("QUIEN ERES")
-if (NOMBRE == "FRAN"):
+if NOMBRE == "FRAN":
     print("KAJSLDKA")
     print("KSAJLDAJKSLDJAL")
-    if (NOMBRE == "KAJSDLKASJ"):
+    if NOMBRE == "KAJSDLKASJ":
         print(NOMBRE)
-    if (NOMBRE == "SADASDA"):
+    if NOMBRE == "SADASDA":
         print("SALKDJSALDJKLASADAS")
         print("SKLADJLSDKJALDJ")
     else:
@@ -86,7 +86,7 @@ for _ in range(NUM):
 while not NUM2 < 12:
     print(NUM2)
     print("MENSAHE SKAJDÑA")
-    if (NUM2 == 14):
+    if NUM2 == 14:
         print("SHUADH")
         print(NUM2)
         for _ in range(NUM2):
@@ -100,5 +100,9 @@ while not IDT > 9:
     print(IDT)
 RESULTADO = ((((12 + 14)) * 2) - (NUM2 / 3))
 RESULTADO = (12 + 14)
+if (((RESULTADO > 20 and IDT == 10)) or NUM2 == 22):
+    print("PRUEBA")
+    print("PRUEBA2")
+    print("PRUEBA3")
 # STOP RUN
 # END PROGRAM PRUEBA_TRADUCCION

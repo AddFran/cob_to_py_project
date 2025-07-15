@@ -129,5 +129,11 @@
            COMPUTE RESULTADO = (12 + 14) * 2 - NUM2 / 3
            COMPUTE RESULTADO = 12 + 14. 
 
+           IF (RESULTADO > 20 AND IDT = 10) OR NUM2 = 22
+               DISPLAY "PRUEBA"
+               DISPLAY "PRUEBA2"
+               DISPLAY "PRUEBA3"
+           END-IF
+
            STOP RUN.
        END PROGRAM PRUEBA-TRADUCCION.

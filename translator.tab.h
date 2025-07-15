@@ -104,7 +104,9 @@ extern int yydebug;
     TIMES = 305,                   /* TIMES  */
     UNTIL = 306,                   /* UNTIL  */
     VARYING = 307,                 /* VARYING  */
-    COMPUTE = 308                  /* COMPUTE  */
+    COMPUTE = 308,                 /* COMPUTE  */
+    OR = 309,                      /* OR  */
+    AND = 310                      /* AND  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -121,7 +123,7 @@ union YYSTYPE
         char* length;
     } picinfo;
 
-#line 125 "translator.tab.h"
+#line 127 "translator.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

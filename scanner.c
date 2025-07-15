@@ -128,6 +128,11 @@ int yylex() {
         
         else if(strcmp(buffer,"COMPUTE")==0)
             return COMPUTE;
+        
+        else if(strcmp(buffer,"AND")==0)
+            return AND;
+        else if(strcmp(buffer,"OR")==0)
+            return OR;
 
         else{
             yylval.str = strdup(buffer); 

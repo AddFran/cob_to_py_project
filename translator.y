@@ -68,10 +68,12 @@ const char* get_variable_type(const char* name){
 %token DIGIT_X DIGIT_9 DIGIT_A DIGIT_S DIGIT_S9 DIGIT_V9
 %token PERFORM ENDPERFORM
 %token TIMES UNTIL VARYING
-
 %token COMPUTE
+
 %left '+' '-'
 %left '*' '/'
+%left OR
+%left AND
 
 
 %type statement
@@ -80,6 +82,8 @@ const char* get_variable_type(const char* name){
 %type <str> maybe_value
 %type <str> conditional
 %type <str> optional_long
+%type <str> conjunction
+%type <str> comparison
 
 %type <str> exp 
 %type <str> tet 
@@ -284,7 +288,7 @@ fef:
 if_statement:
     IF conditional NEWLINE {
         print_indent();
-        printf("if (%s):\n",$2);
+        printf("if %s:\n",$2);
         indent_level++;
         free($2);  
     }
@@ -305,6 +309,25 @@ optional_else:
 ;
 
 conditional:
+    conditional OR conjunction {
+        asprintf(&$$, "(%s or %s)", $1, $3);
+        free($1); free($3);
+    }
+    | conjunction {
+        $$ = $1;
+    }
+;
+
+conjunction:
+    conjunction AND comparison {
+        asprintf(&$$, "(%s and %s)", $1, $3);
+        free($1); 
+        free($3);
+    }
+    | comparison { $$ = $1; }
+;
+
+comparison:
     IDENTIFIER EQUALS IDENTIFIER { 
         asprintf(&$$, "%s == %s",$1,$3); 
     }
@@ -325,6 +348,10 @@ conditional:
     }
     | IDENTIFIER MAJOR NUMBER { 
         asprintf(&$$, "%s > %s",$1,$3); 
+    }
+    | '(' conditional ')' {
+        asprintf(&$$, "(%s)", $2);
+        free($2);
     }
 ;
 
