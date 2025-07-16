@@ -50,7 +50,7 @@ const char* get_variable_type(const char* name){
 
 %token <str> STRING IDENTIFIER
 %token DISPLAY ACCEPT
-%token IF EQUALS
+%token IF EQUALS THEN
 %token MAJOR MINOR
 %token ELSE ENDIF
 %token <str> NUMBER
@@ -286,31 +286,46 @@ fef:
 ;
 
 if_statement:
-    IF conditional NEWLINE {
+    IF conditional optional_then NEWLINE {
         print_indent();
         printf("if %s:\n",$2);
         indent_level++;
         free($2);  
     }
-    statements optional_else ENDIF optional_point {
+    statements elif_statement else_statement ENDIF optional_point {
         indent_level--;
     }
 ;
 
-optional_else:
+optional_then:
+    /* */
+    | THEN
+;
+
+elif_statement:
+    /* */
+    | elif_statement ELSE IF conditional NEWLINE {
+        indent_level--;
+        print_indent();
+        printf("elif %s:\n",$4);
+        indent_level++;
+        free($4);
+    } statements
+;
+
+else_statement:
     /* */
     | ELSE NEWLINE {
-        indent_level--; 
+        indent_level--;
         print_indent();
         printf("else:\n");
-        indent_level++; 
-    }
-    statements
+        indent_level++;
+    } statements
 ;
 
 conditional:
     conditional OR conjunction {
-        asprintf(&$$, "(%s or %s)", $1, $3);
+        asprintf(&$$, "(%s or %s)",$1,$3);
         free($1); free($3);
     }
     | conjunction {
@@ -356,7 +371,7 @@ comparison:
 ;
 
 perform_statement:
-    PERFORM optional_number_identifier TIMES {
+    PERFORM optional_number_identifier TIMES optional_then {
         print_indent();
         printf("for _ in range(%s):\n",$2);
         indent_level++;
@@ -364,7 +379,7 @@ perform_statement:
     statements ENDPERFORM optional_point {
         indent_level--;
     }
-    | PERFORM UNTIL conditional {
+    | PERFORM UNTIL conditional optional_then {
         print_indent();
         printf("while not %s:\n",$3);
         indent_level++;
@@ -373,7 +388,7 @@ perform_statement:
     statements ENDPERFORM optional_point {
         indent_level--;
     }
-    | PERFORM VARYING IDENTIFIER FROM optional_number_identifier BY optional_number_identifier UNTIL conditional {
+    | PERFORM VARYING IDENTIFIER FROM optional_number_identifier BY optional_number_identifier UNTIL conditional optional_then {
         print_indent();
         printf("%s = %s - 1\n",$3,$5);
         printf("while not %s:\n",$9);

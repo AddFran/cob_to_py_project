@@ -60,53 +60,54 @@ extern int yydebug;
     ACCEPT = 261,                  /* ACCEPT  */
     IF = 262,                      /* IF  */
     EQUALS = 263,                  /* EQUALS  */
-    MAJOR = 264,                   /* MAJOR  */
-    MINOR = 265,                   /* MINOR  */
-    ELSE = 266,                    /* ELSE  */
-    ENDIF = 267,                   /* ENDIF  */
-    NUMBER = 268,                  /* NUMBER  */
-    MOVE = 269,                    /* MOVE  */
-    TO = 270,                      /* TO  */
-    ADD = 271,                     /* ADD  */
-    SUBTRACT = 272,                /* SUBTRACT  */
-    MULTIPLY = 273,                /* MULTIPLY  */
-    DIVIDE = 274,                  /* DIVIDE  */
-    FROM = 275,                    /* FROM  */
-    BY = 276,                      /* BY  */
-    INTO = 277,                    /* INTO  */
-    GIVING = 278,                  /* GIVING  */
-    IDENTIFICATION = 279,          /* IDENTIFICATION  */
-    ENVIRONMENT = 280,             /* ENVIRONMENT  */
-    DATA = 281,                    /* DATA  */
-    FIL = 282,                     /* FIL  */
-    WORKINGSTORAGE = 283,          /* WORKINGSTORAGE  */
-    LOCALSTORAGE = 284,            /* LOCALSTORAGE  */
-    LINKAGE = 285,                 /* LINKAGE  */
-    PROCEDURE = 286,               /* PROCEDURE  */
-    DIVISION = 287,                /* DIVISION  */
-    SECTION = 288,                 /* SECTION  */
-    PROGRAMID = 289,               /* PROGRAMID  */
-    END = 290,                     /* END  */
-    PROGRAM = 291,                 /* PROGRAM  */
-    STOP = 292,                    /* STOP  */
-    RUN = 293,                     /* RUN  */
-    NEWLINE = 294,                 /* NEWLINE  */
-    PIC = 295,                     /* PIC  */
-    VALUE = 296,                   /* VALUE  */
-    DIGIT_X = 297,                 /* DIGIT_X  */
-    DIGIT_9 = 298,                 /* DIGIT_9  */
-    DIGIT_A = 299,                 /* DIGIT_A  */
-    DIGIT_S = 300,                 /* DIGIT_S  */
-    DIGIT_S9 = 301,                /* DIGIT_S9  */
-    DIGIT_V9 = 302,                /* DIGIT_V9  */
-    PERFORM = 303,                 /* PERFORM  */
-    ENDPERFORM = 304,              /* ENDPERFORM  */
-    TIMES = 305,                   /* TIMES  */
-    UNTIL = 306,                   /* UNTIL  */
-    VARYING = 307,                 /* VARYING  */
-    COMPUTE = 308,                 /* COMPUTE  */
-    OR = 309,                      /* OR  */
-    AND = 310                      /* AND  */
+    THEN = 264,                    /* THEN  */
+    MAJOR = 265,                   /* MAJOR  */
+    MINOR = 266,                   /* MINOR  */
+    ELSE = 267,                    /* ELSE  */
+    ENDIF = 268,                   /* ENDIF  */
+    NUMBER = 269,                  /* NUMBER  */
+    MOVE = 270,                    /* MOVE  */
+    TO = 271,                      /* TO  */
+    ADD = 272,                     /* ADD  */
+    SUBTRACT = 273,                /* SUBTRACT  */
+    MULTIPLY = 274,                /* MULTIPLY  */
+    DIVIDE = 275,                  /* DIVIDE  */
+    FROM = 276,                    /* FROM  */
+    BY = 277,                      /* BY  */
+    INTO = 278,                    /* INTO  */
+    GIVING = 279,                  /* GIVING  */
+    IDENTIFICATION = 280,          /* IDENTIFICATION  */
+    ENVIRONMENT = 281,             /* ENVIRONMENT  */
+    DATA = 282,                    /* DATA  */
+    FIL = 283,                     /* FIL  */
+    WORKINGSTORAGE = 284,          /* WORKINGSTORAGE  */
+    LOCALSTORAGE = 285,            /* LOCALSTORAGE  */
+    LINKAGE = 286,                 /* LINKAGE  */
+    PROCEDURE = 287,               /* PROCEDURE  */
+    DIVISION = 288,                /* DIVISION  */
+    SECTION = 289,                 /* SECTION  */
+    PROGRAMID = 290,               /* PROGRAMID  */
+    END = 291,                     /* END  */
+    PROGRAM = 292,                 /* PROGRAM  */
+    STOP = 293,                    /* STOP  */
+    RUN = 294,                     /* RUN  */
+    NEWLINE = 295,                 /* NEWLINE  */
+    PIC = 296,                     /* PIC  */
+    VALUE = 297,                   /* VALUE  */
+    DIGIT_X = 298,                 /* DIGIT_X  */
+    DIGIT_9 = 299,                 /* DIGIT_9  */
+    DIGIT_A = 300,                 /* DIGIT_A  */
+    DIGIT_S = 301,                 /* DIGIT_S  */
+    DIGIT_S9 = 302,                /* DIGIT_S9  */
+    DIGIT_V9 = 303,                /* DIGIT_V9  */
+    PERFORM = 304,                 /* PERFORM  */
+    ENDPERFORM = 305,              /* ENDPERFORM  */
+    TIMES = 306,                   /* TIMES  */
+    UNTIL = 307,                   /* UNTIL  */
+    VARYING = 308,                 /* VARYING  */
+    COMPUTE = 309,                 /* COMPUTE  */
+    OR = 310,                      /* OR  */
+    AND = 311                      /* AND  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -123,7 +124,7 @@ union YYSTYPE
         char* length;
     } picinfo;
 
-#line 127 "translator.tab.h"
+#line 128 "translator.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
